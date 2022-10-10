@@ -1,8 +1,11 @@
 import { init } from "@rematch/core"
-import * as models from "./model"
+import { count, useDarkMode } from "./model"
 
 const store = init({
-  models,
+  models: {
+    count: count,
+    useDarkMode: useDarkMode,
+  },
 })
 
 export default store
