@@ -25,6 +25,13 @@ exports.createPages = async gatsbyUtilities => {
 
   // And a paginated archive
   await createBlogPostArchive({ posts, gatsbyUtilities })
+
+  // const PageTemplate = path.resolve("./src/templates/Page.js")
+  // gatsbyUtilities.actions.createPage({
+  //   path: "/test",
+  //   component: PageTemplate,
+  //   context: {},
+  // })
 }
 
 /**
@@ -88,7 +95,7 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
           // we want the first page to be "/" and any additional pages
           // to be numbered.
           // "/blog/2" for example
-          return page === 1 ? `/` : `/blog/${page}`
+          return page === 1 ? `/blog` : `/blog/${page}`
         }
 
         return null

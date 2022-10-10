@@ -20,6 +20,7 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
     data: post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
     alt: post.featuredImage?.node?.alt || ``,
   }
+  console.log(post)
 
   return (
     <Layout>
@@ -32,6 +33,7 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
       >
         <header>
           <h1 itemProp="headline">{parse(post.title)}</h1>
+          {/*<h6>{parse(post)}</h6>*/}
 
           <p>{post.date}</p>
 
