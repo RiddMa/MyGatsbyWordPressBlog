@@ -4,15 +4,7 @@ import Container from "@mui/material/Container"
 
 const Footer = props => {
   return (
-    <Container
-      className={"acrylic-dark"}
-      sx={{
-        textAlign: "center",
-        minHeight: "100px",
-        margin: "24px 0 0 0",
-        minWidth: "100vw",
-      }}
-    >
+    <div className="acrylic-dark">
       <Typography variant="body2" color={"white"}>
         © Ridd Ma {new Date().getFullYear()}, Built with
         {` `}
@@ -21,7 +13,7 @@ const Footer = props => {
         And <a href="https://wordpress.org/">WordPress</a>
         {`.`}
       </Typography>
-    </Container>
+    </div>
   )
 }
 

@@ -1,13 +1,8 @@
 import React from "react"
-import Layout from "../components/layout"
-import PageTemplate from "../templates/page"
-import MyLayout from "../components/my-layout"
+import ThreeColumn from "../components/layout/three-column"
+import MainLeftPanel from "../components/main-left-panel"
+import MainRightPanel from "../components/main-right-panel";
 
-const Home = () => (
-  // <Layout>
-  //   <PageTemplate></PageTemplate>
-  // </Layout>
-  <MyLayout title="博客首页"></MyLayout>
-)
-
-export default Home
+export default function Home(props) {
+  return <ThreeColumn left={<MainLeftPanel></MainLeftPanel>} right={<MainRightPanel></MainRightPanel>} />
+}

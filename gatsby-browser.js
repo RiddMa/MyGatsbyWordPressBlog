@@ -13,7 +13,7 @@ import "./src/css/ridd.css"
 import React from "react"
 import { createTheme, ThemeProvider } from "@mui/material"
 import { orange } from "@mui/material/colors"
-import { connect, Provider, useSelector } from "react-redux"
+import { Provider, useSelector } from "react-redux"
 import store from "./src/components/rematch/store"
 import { StyledEngineProvider } from "@mui/material/styles"
 
@@ -41,5 +41,3 @@ const MyThemeProvider = props => {
   return <ThemeProvider theme={myTheme}>{props.children}</ThemeProvider>
 }
 
-// export default connect(mapState)(wrapRootElement)
-// export default wrapRootElement

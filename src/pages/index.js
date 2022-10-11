@@ -2,16 +2,16 @@ import React from "react"
 import { graphql } from "gatsby"
 import Seo from "../components/seo"
 import { Button, Link } from "@mui/material"
-import MyLayout from "../components/my-layout"
+import MyLayout from "../components/layout/my-layout"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
 import store from "../components/rematch/store"
 import Count from "../components/rematch/count"
 import HeroTitle from "../components/hero-title"
-import DarkModeToggle from "../components/darkModeToggle"
+import DarkModeToggle from "../components/dark-mode-toggle"
 
-export default function Home({ data }) {
+export default function Index(props) {
   //highlight-line
   return (
     <MyLayout title="Ridd的主页">
@@ -24,9 +24,9 @@ export default function Home({ data }) {
         <Container>
           <HeroTitle></HeroTitle>
           <DarkModeToggle></DarkModeToggle>
-          <Button variant="contained">博客</Button>
-          <h4>Posts</h4>
-          <Count></Count>
+          <Button variant="contained" href={"/home"}>
+            博客
+          </Button>
           <Box sx={{ height: "640px" }}></Box>
         </Container>
       </Container>

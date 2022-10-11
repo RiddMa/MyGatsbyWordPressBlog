@@ -2,10 +2,11 @@ import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { Scrollbars } from "react-custom-scrollbars-2"
 import "/src/css/ridd.css"
-import Footer from "./footer"
-import ResponsiveAppBar from "./ResponsiveAppBar"
+import Footer from "../footer"
+import ResponsiveAppBar from "../responsive-app-bar"
 import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
+import MainLeftPanel from "../main-left-panel"
 
 const MyLayout = props => {
   // const {
@@ -37,12 +38,13 @@ const MyLayout = props => {
       <Box
         sx={{ margin: 0, padding: 0, minHeight: "100vh" }}
         className={"container-box bg-fixed bg-cover"}
-        style={{
-          backgroundImage:
-            "url(https://jp2.riddma.com/wp-content/uploads/2022/09/STScI-1Small.png)",
-        }}
+        // style={{
+        //   backgroundImage:
+        //     "url(https://jp2.riddma.com/wp-content/uploads/2022/09/STScI-1Small.png)",
+        // }}
       >
         <ResponsiveAppBar title={props.title}></ResponsiveAppBar>
+        <MainLeftPanel></MainLeftPanel>
 
         <main>{props.children}</main>
 
