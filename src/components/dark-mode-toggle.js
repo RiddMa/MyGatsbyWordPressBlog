@@ -7,13 +7,15 @@ const DarkModeToggle = props => {
   const dispatch = useDispatch()
 
   return (
-    <div>
-      <span>Dark mode: {useDarkMode.toString()}</span>
-      <br />
-      <Button onClick={() => dispatch({ type: "useDarkMode/toggle" })}>
-        切换深色模式
-      </Button>
-    </div>
+    <Button
+      className={"href-text"}
+      variant={"contained"}
+      onClick={() =>
+        dispatch({ type: "useDarkMode/setDarkMode", payload: !useDarkMode })
+      }
+    >
+      {useDarkMode ? "切换浅色模式" : "切换深色模式"}
+    </Button>
   )
 }
 

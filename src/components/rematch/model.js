@@ -19,9 +19,25 @@ export const count = {
 export const useDarkMode = {
   state: true,
   reducers: {
-    toggle(state) {
-      console.log(state)
-      return !state
+    toggleVariable(state, payload) {
+      return payload
     },
   },
+  effects: dispatch => ({
+    setDarkMode(payload) {
+      dispatch.useDarkMode.toggleVariable(payload)
+      if (payload) {
+        document.getElementById("___gatsby").classList.add("dark")
+      } else {
+        document.getElementById("___gatsby").classList.remove("dark")
+      }
+    },
+    syncDarkMode(payload, rootState) {
+      if (rootState.useDarkMode) {
+        document.getElementById("___gatsby").classList.add("dark")
+      } else {
+        document.getElementById("___gatsby").classList.remove("dark")
+      }
+    },
+  }),
 }

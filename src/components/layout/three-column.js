@@ -10,22 +10,18 @@ import Footer from "../footer"
 import { Scrollbars } from "react-custom-scrollbars-2"
 
 const ThreeColumn = props => {
-  console.log(props)
-  const classes = useStyles()
-
   return (
     <Scrollbars
+      id={"global-scroller"}
       autoHeight
       autoHeightMin={"100vh"}
       autoHide
-      // Hide delay in ms
       autoHideTimeout={1000}
-      // Duration for hide animation in ms.
       autoHideDuration={200}
       className={"global-scroller"}
     >
       <div
-        className={"container-box bg-fixed bg-cover min-h-screen m-0 p-0"}
+        className={"container-box bg-fixed bg-cover min-h-screen m-0 p-0 "}
         // style={{
         //   backgroundImage:
         //     "url(https://jp2.riddma.com/wp-content/uploads/2022/09/STScI-1Small.png)",
@@ -34,11 +30,10 @@ const ThreeColumn = props => {
         <div className={"flex flex-row justify-center"}>
           <div className={"grow flex flex-col max-w-screen-2xl"}>
             <div className={"flex flex-row"}>
-              <div className={"basis-3/12"}>
-                
-                {props.left}
+              <div className={"basis-3/12"}>{props.left}</div>
+              <div className={"basis-6/12"}>
+                <main>{props.center}</main>
               </div>
-              <div className={"basis-6/12"}>{props.center}</div>
               <div className={"basis-3/12"}>{props.right}</div>
             </div>
             <Footer />

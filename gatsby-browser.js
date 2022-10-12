@@ -3,19 +3,20 @@ import "typeface-montserrat"
 import "typeface-merriweather"
 
 // normalize CSS across browsers
-// import "./src/css/normalize.css"
+import "./src/css/normalize.css"
 
 // custom CSS styles
 // import "./src/css/style.css"
 
 import "./src/css/ridd.css"
 
-import React from "react"
+import React, { useEffect } from "react"
 import { createTheme, ThemeProvider } from "@mui/material"
 import { orange } from "@mui/material/colors"
-import { Provider, useSelector } from "react-redux"
+import { Provider, useDispatch, useSelector } from "react-redux"
 import store from "./src/components/rematch/store"
 import { StyledEngineProvider } from "@mui/material/styles"
+import { darkTheme, lightTheme } from "./src/css/theme"
 
 export const wrapRootElement = ({ element }) => {
   return (
@@ -29,15 +30,15 @@ export const wrapRootElement = ({ element }) => {
 
 const MyThemeProvider = props => {
   const useDarkMode = useSelector(state => state.useDarkMode)
+  const dispatch = useDispatch()
 
-  const myTheme = createTheme({
-    status: {
-      danger: orange[500],
-    },
-    palette: {
-      mode: useDarkMode ? "dark" : "light",
-    },
+  useEffect(() => {
+    dispatch({ type: "useDarkMode/syncDarkMode" })
   })
-  return <ThemeProvider theme={myTheme}>{props.children}</ThemeProvider>
-}
 
+  return (
+    <ThemeProvider theme={useDarkMode ? darkTheme : lightTheme}>
+      <div className={"my-bg"}>{props.children}</div>
+    </ThemeProvider>
+  )
+}

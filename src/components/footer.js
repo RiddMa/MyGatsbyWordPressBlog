@@ -4,8 +4,9 @@ import Container from "@mui/material/Container"
 
 const Footer = props => {
   return (
-    <div className="acrylic-dark">
-      <Typography variant="body2" color={"white"}>
+    // <div className="acrylic-dark">
+    <div>
+      <Typography variant="body2" color={"text.hint"}>
         © Ridd Ma {new Date().getFullYear()}, Built with
         {` `}
         <a href="https://www.gatsbyjs.com">Gatsby</a>
