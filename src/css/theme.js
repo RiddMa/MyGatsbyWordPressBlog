@@ -26,15 +26,24 @@ export const darkTheme = createTheme({
       paper: "#262626",
     },
     text: {
-      primary: "#e2e8f0",
-      secondary: "#94a3b8",
-      disabled: "#475569",
-      hint: "#475569",
+      primary: "#e2e8f0", //text-slate-200
+      secondary: "#94a3b8", //text-slate-400
+      disabled: "#64748b", //text-slate-500
+      hint: "#64748b", //text-slate-500
     },
     divider: "#404040",
   },
   typography: {
-    fontFamily: "Noto Sans SC",
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Noto Sans SC"',
+      '"Helvetica Neue"',
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
     fontWeightLight: 400,
     fontWeightRegular: 500,
     fontWeightMedium: 600,
@@ -101,6 +110,11 @@ export const darkTheme = createTheme({
   },
   shape: {
     borderRadius: 16,
+  },
+  props: {
+    MuiButtonBase: {
+      disableRipple: true,
+    },
   },
 })
 
@@ -118,10 +132,10 @@ export const lightTheme = createTheme({
       default: "#f1f5f9",
     },
     text: {
-      primary: "#0f172a",
-      secondary: "#334155",
-      disabled: "#64748b",
-      hint: "#64748b",
+      primary: "#0f172a", //text-slate-900
+      secondary: "#334155", //text-slate-700
+      disabled: "#94a3b8", //text-slate-400
+      hint: "#94a3b8", //text-slate-400
     },
     error: {
       main: "#dc2626",
@@ -138,7 +152,16 @@ export const lightTheme = createTheme({
     divider: "#e5e5e5",
   },
   typography: {
-    fontFamily: "Noto Sans SC",
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Noto Sans SC"',
+      '"Helvetica Neue"',
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
     fontWeightLight: 400,
     fontWeightRegular: 500,
     fontWeightMedium: 600,
@@ -205,5 +228,10 @@ export const lightTheme = createTheme({
   },
   shape: {
     borderRadius: 16,
+  },
+  props: {
+    MuiButtonBase: {
+      disableRipple: true,
+    },
   },
 })
