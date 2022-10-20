@@ -30,11 +30,9 @@ const ThreeColumn = props => {
         <div className={"flex flex-row justify-center"}>
           <div className={"grow flex flex-col max-w-screen-2xl"}>
             <div className={"flex flex-row"}>
-              <div className={"basis-3/12"}>{props.left}</div>
-              <div className={"basis-6/12"}>
-                <main>{props.center}</main>
-              </div>
-              <div className={"basis-3/12"}>{props.right}</div>
+              <div className={"basis-2/12"}>{props.left}</div>
+              <main className={"basis-8/12"}>{props.center}</main>
+              <div className={"basis-2/12"}>{props.right}</div>
             </div>
             <Footer />
           </div>

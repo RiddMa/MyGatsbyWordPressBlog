@@ -17,7 +17,7 @@ const Footer = props => {
       >
         ©{" "}
         <Link
-          href={"https://github.com/RiddMa"}
+          href={"https://riddma.com"}
           target="_blank"
           rel="noopener noreferrer"
           className={"text-secondary"}
@@ -37,7 +37,7 @@ const Footer = props => {
         </Typography>
         <div className={"flex flex-row justify-center space-x-2 gap-y-4 flex-wrap"}>
           <Link
-            href="https://wordpress.org/"
+            href="https://reactjs.org/"
             target="_blank"
             rel="noopener noreferrer"
             className={
@@ -150,7 +150,7 @@ const Footer = props => {
           inspired by
         </Typography>
         <Link
-          href={"https://github.com/CaiJimmy/hugo-theme-stack"}
+          href={"https://stack.jimmycai.com/"}
           target="_blank"
           rel="noopener noreferrer"
           className={
@@ -184,10 +184,10 @@ const WpLogo = props => {
         }
         alt={"Logo of WordPress"}
         layout={"fixed"}
+        placeholder={"blurred"}
         width={45}
         height={45}
         transformOptions={{ trim: 10 }}
-        className={"dark:hidden"}
       ></StaticImage>
     )
   } else {
@@ -196,10 +196,10 @@ const WpLogo = props => {
         src={"https://s.w.org/style/images/about/WordPress-logotype-wmark.png"}
         alt={"Logo of WordPress"}
         layout={"fixed"}
+        placeholder={"blurred"}
         width={45}
         height={45}
         transformOptions={{ trim: 10 }}
-        className={"dark:hidden"}
       ></StaticImage>
     )
   }

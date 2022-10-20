@@ -17,7 +17,7 @@ export const count = {
 }
 
 export const useDarkMode = {
-  state: true,
+  state: false,
   reducers: {
     toggleVariable(state, payload) {
       return payload

@@ -1,0 +1,15 @@
+import MainLeftPanel from "../components/main-left-panel"
+import MainRightPanel from "../components/main-right-panel"
+import ThreeColumn from "../components/layout/three-column"
+import React from "react"
+import BlogPostIndex from "../templates/blog-post-index"
+
+const BlogTest = props => {
+  return (
+    <ThreeColumn
+      left={<MainLeftPanel />}
+      center={<BlogPostIndex />}
+      right={<MainRightPanel />}
+    />
+  )
+}

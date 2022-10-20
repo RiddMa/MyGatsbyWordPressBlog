@@ -1,10 +1,20 @@
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import { Avatar, Container, Link, List, Paper, Stack } from "@mui/material"
+import {
+  Avatar,
+  Container,
+  Link,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  Stack,
+} from "@mui/material"
 import Typography from "@mui/material/Typography"
 import GitHubIcon from "@mui/icons-material/GitHub"
 
-import DarkModeToggle from "./dark-mode-toggle"
+import DarkModeToggle from "./basic/dark-mode-toggle"
 import { RdButton } from "./rd-button"
 
 const MainLeftPanel = props => {
@@ -23,16 +33,28 @@ const MainLeftPanel = props => {
           }
         }
       }
+      allWp {
+        nodes {
+          generalSettings {
+            url
+            title
+            description
+          }
+        }
+      }
     }
   `)
   console.log(data)
-  console.log()
   const username = data["allWpUser"]["nodes"][0]["name"]
   const userUrl = ``
   const avatar = data["allWpUser"]["nodes"][0]["avatar"]["url"].replace(
     /\?s=\d+/,
     "?s=150"
   )
+  const generalSettings = data["allWp"]["nodes"][0]["generalSettings"]
+  const siteUrl = generalSettings["url"]
+  const siteTitle = generalSettings["title"]
+  const siteDesc = generalSettings["description"]
   return (
     <div className={"flex flex-col space-y-4 py-16"}>
       <Avatar
@@ -48,7 +70,7 @@ const MainLeftPanel = props => {
           className={"href-text"}
           color={"primary"}
         >
-          Ridd's Blog
+          {siteTitle}
         </Typography>
       </Link>
       <div className={"slogan"}>
@@ -58,13 +80,29 @@ const MainLeftPanel = props => {
           // className={"text-primary"}
           color={"text.primary"}
         >
-          Think Different.
+          {siteDesc}
         </Typography>
       </div>
       <div className={"flex flex-row"}>
-        <GitHubIcon className={"text-primary"}></GitHubIcon>
+        <Link
+          href={"https://github.com/RiddMa"}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={"text-secondary"}
+        >
+          <GitHubIcon className={"text-primary"}></GitHubIcon>
+        </Link>
       </div>
-
+      <div>
+        <List>
+          <ListItem>
+            <ListItemIcon>
+              <GitHubIcon></GitHubIcon>
+            </ListItemIcon>
+            <ListItemText primary="Single-line item" />
+          </ListItem>
+        </List>
+      </div>
       <DarkModeToggle></DarkModeToggle>
       <RdButton>test</RdButton>
     </div>

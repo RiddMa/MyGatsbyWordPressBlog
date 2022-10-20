@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop --host 10.0.0.11 -p 8001",
+    "develop": "gatsby develop --host 0.0.0.0 -p 8001",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",

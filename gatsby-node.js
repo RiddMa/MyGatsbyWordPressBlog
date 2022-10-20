@@ -97,7 +97,6 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
           // "/blog/2" for example
           return page === 1 ? `/blog` : `/blog/${page}`
         }
-
         return null
       }
 
@@ -105,10 +104,8 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
       // See https://www.gatsbyjs.com/docs/actions#createPage for more info
       await gatsbyUtilities.actions.createPage({
         path: getPagePath(pageNumber),
-
         // use the blog post archive template as the page component
-        component: path.resolve(`./src/templates/blog-post-archive.js`),
-
+        component: path.resolve(`./src/templates/blog-post-index.js`),
         // `context` is available in the template as a prop and
         // as a variable in GraphQL.
         context: {
@@ -116,10 +113,8 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
           // so for page 1, 0 * 10 = 0 offset, for page 2, 1 * 10 = 10 posts offset,
           // etc
           offset: index * postsPerPage,
-
           // We need to tell the template how many posts to display too
           postsPerPage,
-
           nextPagePath: getPagePath(pageNumber + 1),
           previousPagePath: getPagePath(pageNumber - 1),
         },

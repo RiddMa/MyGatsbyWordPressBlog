@@ -9,7 +9,7 @@ import Box from "@mui/material/Box"
 import store from "../components/rematch/store"
 import Count from "../components/rematch/count"
 import HeroTitle from "../components/hero-title"
-import DarkModeToggle from "../components/dark-mode-toggle"
+import DarkModeToggle from "../components/basic/dark-mode-toggle"
 
 export default function Index(props) {
   //highlight-line
