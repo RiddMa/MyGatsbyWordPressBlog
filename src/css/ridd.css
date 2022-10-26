@@ -36,14 +36,22 @@
 /*    @apply text-sky-600 dark:text-sky-400*/
 /*}*/
 
-.text-primary{
+.text-primary {
     @apply text-slate-900 dark:text-slate-200
 }
 
-.text-secondary{
+.text-secondary {
     @apply text-slate-700 dark:text-slate-400
 }
 
-.text-hint{
+.text-hint {
     @apply text-slate-400 dark:text-slate-500
+}
+
+.rd-button {
+    @apply justify-center
+}
+
+.w-inherit {
+    width: inherit !important;
 }

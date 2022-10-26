@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { graphql, useStaticQuery } from "gatsby"
 import {
   Avatar,
@@ -16,6 +16,7 @@ import GitHubIcon from "@mui/icons-material/GitHub"
 
 import DarkModeToggle from "./basic/dark-mode-toggle"
 import { RdButton } from "./rd-button"
+import Button from "@mui/material/Button";
 
 const MainLeftPanel = props => {
   const data = useStaticQuery(graphql`
@@ -44,7 +45,7 @@ const MainLeftPanel = props => {
       }
     }
   `)
-  console.log(data)
+  // console.log(data)
   const username = data["allWpUser"]["nodes"][0]["name"]
   const userUrl = ``
   const avatar = data["allWpUser"]["nodes"][0]["avatar"]["url"].replace(
@@ -55,8 +56,17 @@ const MainLeftPanel = props => {
   const siteUrl = generalSettings["url"]
   const siteTitle = generalSettings["title"]
   const siteDesc = generalSettings["description"]
+
+
+  // const [width, setWidth] = useState(0);
+  // const div = useCallback(node => {
+  //   if (node !== null) {
+  //     setWidth(node.getElementById("left-column").width);
+  //   }
+  // }, []);
+
   return (
-    <div className={"flex flex-col space-y-4 py-16"}>
+    <div className={"flex flex-col space-y-4 fixed h-screen w-inherit"}>
       <Avatar
         className={"avatar"}
         alt={username}
@@ -93,15 +103,10 @@ const MainLeftPanel = props => {
           <GitHubIcon className={"text-primary"}></GitHubIcon>
         </Link>
       </div>
-      <div>
-        <List>
-          <ListItem>
-            <ListItemIcon>
-              <GitHubIcon></GitHubIcon>
-            </ListItemIcon>
-            <ListItemText primary="Single-line item" />
-          </ListItem>
-        </List>
+      <div className={"flex flex-col gap-y-4"}>
+        <Button className={"rd-button"} href={"/"}>主页</Button>
+        <Button className={"rd-button"} href={"/blog"}>博客</Button>
+
       </div>
       <DarkModeToggle></DarkModeToggle>
       <RdButton>test</RdButton>

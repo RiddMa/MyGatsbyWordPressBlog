@@ -30,9 +30,11 @@ const ThreeColumn = props => {
         <div className={"flex flex-row justify-center"}>
           <div className={"grow flex flex-col max-w-screen-2xl"}>
             <div className={"flex flex-row"}>
-              <div className={"basis-2/12"}>{props.left}</div>
-              <main className={"basis-8/12"}>{props.center}</main>
-              <div className={"basis-2/12"}>{props.right}</div>
+              <div id={"left-column"} className={"w-72 py-16"}>{props.left}</div>
+              <main id={"center-column"}  className={"basis-8/12 py-16"}>
+                <div className={"px-12"}>{props.center}</div>
+              </main>
+              <div id={"right-column"}  className={"w-72 py-16"}>{props.right}</div>
             </div>
             <Footer />
           </div>
@@ -41,18 +43,5 @@ const ThreeColumn = props => {
     </Scrollbars>
   )
 }
-
-const useStyles = makeStyles({
-  container: {
-    height: "100%", // So that grids 1 & 4 go all the way down
-    minHeight: 150, // Give minimum height to a div
-    border: "1px solid black",
-    fontSize: 30,
-    textAlign: "center",
-  },
-  containerTall: {
-    minHeight: 250, // This div has higher minimum height
-  },
-})
 
 export default ThreeColumn

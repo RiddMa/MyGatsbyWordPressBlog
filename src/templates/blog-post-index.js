@@ -3,10 +3,10 @@ import { Link, graphql } from "gatsby"
 import parse from "html-react-parser"
 
 import Bio from "../components/bio"
-import Layout from "../components/layout"
 import Seo from "../components/seo"
 import ThreeColumn from "../components/layout/three-column"
 import MainLeftPanel from "../components/main-left-panel"
+import BlogPostIndexEntry from "../components/basic/blog-post-index-entry"
 
 const BlogPostIndex = ({
   data,
@@ -87,13 +87,22 @@ const BlogPostList = ({
     )
   }
   return (
-    <div>
-
-  </div>
+    <div className={"flex flex-col gap-y-4"}>
+      {posts.map(item => {
+        return (
+          <BlogPostIndexEntry
+            key={item["uri"]}
+            data={item}
+            className={"mb-4"}
+          ></BlogPostIndexEntry>
+        )
+      })}
+    </div>
   )
 }
 
 export default BlogPostIndex
+
 
 export const pageQuery = graphql`
   query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
@@ -103,11 +112,29 @@ export const pageQuery = graphql`
       skip: $offset
     ) {
       nodes {
-        excerpt
         uri
-        date(formatString: "MMMM DD, YYYY")
+        date(formatString: "YYYY-MM-DD")
+        dateGmt(formatString: "YYYY-MM-DD")
         title
         excerpt
+        categories {
+          nodes {
+            id
+            name
+            slug
+            uri
+          }
+        }
+        featuredImage {
+          node {
+            caption
+            altText
+            description
+            link
+            title
+            uri
+          }
+        }
       }
     }
   }
