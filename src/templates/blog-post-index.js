@@ -7,6 +7,7 @@ import Seo from "../components/seo"
 import ThreeColumn from "../components/layout/three-column"
 import MainLeftPanel from "../components/main-left-panel"
 import BlogPostIndexEntry from "../components/basic/blog-post-index-entry"
+import MainRightPanel from "../components/main-right-panel";
 
 const BlogPostIndex = ({
   data,
@@ -64,7 +65,7 @@ const BlogPostIndex = ({
           pageContext={{ nextPagePath, previousPagePath }}
         />
       }
-      right={<MainLeftPanel />}
+      right={<MainRightPanel />}
     />
   )
 }
