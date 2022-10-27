@@ -1,57 +1,56 @@
 import React from "react"
 import { Link } from "@mui/material"
 import Typography from "@mui/material/Typography"
+import parse from "html-react-parser"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 const BlogPostIndexEntry = props => {
-  const postData = props.data
-  console.log(postData)
+  const post = props.data
+  console.log(post)
 
-  const hasImage = !!postData.featuredImage?.node?.link
+  const featuredImage = {
+    data: post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
+    alt: post.featuredImage?.node?.alt || ``,
+  }
+  const hasImage =
+    post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData
 
   return (
     <div
       className={
-        (hasImage ? "space-x-4" : "") +
-        " card flex flex-row p-4 border-solid rounded-2xl drop-shadow-lg"
+        "card flex flex-row p-6 border-none rounded-3xl drop-shadow-lg content-bg space-x-4"
       }
     >
       {hasImage && (
-        <div className="card-header max-w-sm max-h-48">
-          <Link className={"flex flex-col no-underline"} href={postData["uri"]}>
-            <img
-              className="max-w-sm max-h-48 rounded-2xl"
-              // src={postData.featuredImage?.node?.link || ""}
-              src={
-                "https://images.unsplash.com/photo-1666731725101-8824fea39c2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-              }
-              alt={
-                postData.featuredImage?.node?.alt || "No Image or Error Loading"
-              }
+        <div className="card-header">
+          <Link className={"no-underline w-fit h-fit"} href={post["uri"]}>
+            <GatsbyImage
+              image={featuredImage.data}
+              alt={featuredImage.alt}
+              className={"rounded-2xl w-fit h-fit"}
             />
           </Link>
         </div>
       )}
 
-      <div
-        className={
-          (hasImage ? "" : "") + " card-body flex flex-col"
-        }
-      >
-        <Link className={"flex flex-col no-underline"} href={postData["uri"]}>
+      <div className={(hasImage ? "" : "") + " card-body flex flex-col"}>
+        <Link className={"flex flex-col no-underline"} href={post["uri"]}>
           <Typography
             variant="h5"
             component={"span"}
             className={"text-primary"}
           >
-            {postData["title"]}
+            {post["title"]}
           </Typography>
           <Typography
             variant="body1"
             component={"span"}
             className={"text-secondary"}
-            dangerouslySetInnerHTML={{ __html: postData["excerpt"] }}
-          ></Typography>
+          >
+            {parse(post["excerpt"])}
+          </Typography>
         </Link>
+        <div className={"grow"}></div>
         <div className={"flex flex-row"}>
           <Typography
             variant="body1"
@@ -59,9 +58,13 @@ const BlogPostIndexEntry = props => {
             className={"text-hint"}
           >
             分类：
-            {postData.categories?.nodes?.map(item => {
+            {post.categories?.nodes?.map(item => {
               return (
-                <Link key={item.uri} className={"text-hint mr-2"} href={item.uri}>
+                <Link
+                  key={item.uri}
+                  className={"text-hint mr-2"}
+                  href={item.uri}
+                >
                   {item.name}
                 </Link>
               )
@@ -73,7 +76,7 @@ const BlogPostIndexEntry = props => {
             component={"span"}
             className={"text-hint justify-self-end"}
           >
-            {postData["dateGmt"]}
+            {post["dateGmt"]}
           </Typography>
         </div>
       </div>

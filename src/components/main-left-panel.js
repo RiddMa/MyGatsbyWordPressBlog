@@ -66,7 +66,7 @@ const MainLeftPanel = props => {
   // }, []);
 
   return (
-    <div className={"flex flex-col space-y-4 fixed h-screen w-inherit"}>
+    <div className={"flex flex-col space-y-4 fixed max-h-screen w-inherit"}>
       <Avatar
         className={"avatar"}
         alt={username}
@@ -75,20 +75,20 @@ const MainLeftPanel = props => {
       ></Avatar>
       <Link href={"/"} className={"title"}>
         <Typography
-          variant={"h4"}
+          variant={"h5"}
           component={"h1"}
-          className={"href-text"}
-          color={"primary"}
+          className={"href-text text-primary"}
+          // color={"primary"}
         >
           {siteTitle}
         </Typography>
       </Link>
       <div className={"slogan"}>
         <Typography
-          variant={"h6"}
-          component={"h1"}
-          // className={"text-primary"}
-          color={"text.primary"}
+          variant={"body1"}
+          component={"span"}
+          className={"text-secondary"}
+          // color={"text.secondary"}
         >
           {siteDesc}
         </Typography>

@@ -7,7 +7,7 @@ import Seo from "../components/seo"
 import ThreeColumn from "../components/layout/three-column"
 import MainLeftPanel from "../components/main-left-panel"
 import BlogPostIndexEntry from "../components/basic/blog-post-index-entry"
-import MainRightPanel from "../components/main-right-panel";
+import MainRightPanel from "../components/main-right-panel"
 
 const BlogPostIndex = ({
   data,
@@ -15,47 +15,6 @@ const BlogPostIndex = ({
 }) => {
   const posts = data["allWpPost"]["nodes"]
 
-  // return (
-  //   <Layout isHomePage>
-  //     <Seo title="All posts" />
-  //
-  //     <Bio />
-  //
-  //     <ol style={{ listStyle: `none` }}>
-  //       {posts.map(post => {
-  //         const title = post.title
-  //
-  //         return (
-  //           <li key={post.uri}>
-  //             <article
-  //               className="post-list-item"
-  //               itemScope
-  //               itemType="http://schema.org/Article"
-  //             >
-  //               <header>
-  //                 <h2>
-  //                   <Link to={post.uri} itemProp="url">
-  //                     <span itemProp="headline">{parse(title)}</span>
-  //                   </Link>
-  //                 </h2>
-  //                 <small>{post.date}</small>
-  //               </header>
-  //               <section itemProp="description">{parse(post.excerpt)}</section>
-  //             </article>
-  //           </li>
-  //         )
-  //       })}
-  //     </ol>
-  //
-  //     {previousPagePath && (
-  //       <>
-  //         <Link to={previousPagePath}>Previous page</Link>
-  //         <br />
-  //       </>
-  //     )}
-  //     {nextPagePath && <Link to={nextPagePath}>Next page</Link>}
-  //   </Layout>
-  // )
   return (
     <ThreeColumn
       left={<MainLeftPanel />}
@@ -88,7 +47,7 @@ const BlogPostList = ({
     )
   }
   return (
-    <div className={"flex flex-col gap-y-4"}>
+    <div className={"flex flex-col gap-y-8"}>
       {posts.map(item => {
         return (
           <BlogPostIndexEntry
@@ -103,7 +62,6 @@ const BlogPostList = ({
 }
 
 export default BlogPostIndex
-
 
 export const pageQuery = graphql`
   query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
@@ -131,12 +89,75 @@ export const pageQuery = graphql`
             caption
             altText
             description
-            link
             title
-            uri
+            localFile {
+              childImageSharp {
+                gatsbyImageData(
+                  placeholder: BLURRED
+                  quality: 30
+                  layout: FIXED
+                  formats: AUTO
+                  transformOptions: { cropFocus: ATTENTION, fit: COVER }
+                  height: 200
+                  aspectRatio: 1
+                )
+              }
+            }
           }
         }
       }
     }
   }
 `
+
+// export const pageQuery = graphql`
+//   query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
+//     allWpPost(
+//       sort: { fields: [date], order: DESC }
+//       limit: $postsPerPage
+//       skip: $offset
+//     ) {
+//       nodes {
+//         uri
+//         date(formatString: "YYYY-MM-DD")
+//         dateGmt(formatString: "YYYY-MM-DD")
+//         title
+//         excerpt
+//         categories {
+//           nodes {
+//             id
+//             name
+//             slug
+//             uri
+//           }
+//         }
+//         featuredImage {
+//           node {
+//             caption
+//             altText
+//             description
+//             title
+//             localFile {
+//               childImageSharp {
+//                 fluid(
+//                   cropFocus: ATTENTION
+//                   maxHeight: 300
+//                   maxWidth: 300
+//                   quality: 30
+//                   toFormat: AUTO
+//                 ) {
+//                   base64
+//                   tracedSVG
+//                   srcWebp
+//                   srcSetWebp
+//                   originalImg
+//                   originalName
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// `

@@ -37,7 +37,7 @@ const MyThemeProvider = props => {
 
   return (
     <ThemeProvider theme={useDarkMode ? darkTheme : lightTheme}>
-      <div className={"my-bg"}>{props.children}</div>
+      <div className={"website-bg"}>{props.children}</div>
     </ThemeProvider>
   )
 }
