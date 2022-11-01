@@ -28,7 +28,7 @@
     @apply bg-zinc-100 dark:bg-neutral-900
 }
 
-.content-bg{
+.content-bg {
     @apply bg-white dark:bg-zinc-800
 }
 
@@ -48,7 +48,7 @@
     @apply text-slate-700 dark:text-slate-400
 }
 
-.text-comment{
+.text-comment {
     @apply text-slate-400 dark:text-slate-500
 }
 
@@ -66,4 +66,25 @@
 
 .w-inherit {
     width: inherit !important;
+}
+
+@keyframes moveBehindAnim {
+    from {
+        transform: scale(1, 1);
+        filter: brightness(100%);
+    }
+    to {
+        transform: scale(0.75, 0.75);
+        filter: brightness(0%);
+    }
+}
+
+:root {
+    --scroll: 0
+}
+
+.moveBehind {
+    animation: moveBehindAnim 1.1s ease-out infinite;
+    animation-play-state: paused;
+    animation-delay: calc(var(--scroll) * -1s);
 }

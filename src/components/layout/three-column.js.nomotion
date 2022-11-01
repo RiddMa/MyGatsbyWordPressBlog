@@ -2,31 +2,6 @@ import React from "react"
 import Footer from "../basic/footer"
 import { Scrollbars } from "react-custom-scrollbars-2"
 
-import { motion, AnimatePresence } from "framer-motion"
-
-const duration = 0.5
-const variants = {
-  initial: {
-    opacity: 0,
-    x: 100,
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    x: 0,
-    transition: {
-      duration: duration,
-      delay: duration,
-      when: "beforeChildren",
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: 200,
-    transition: { duration: duration },
-  },
-}
-
 const ThreeColumn = props => {
   return (
     <Scrollbars
@@ -52,19 +27,7 @@ const ThreeColumn = props => {
                 {props.left}
               </div>
               <main id={"center-column"} className={"basis-8/12 py-16"}>
-                {/*<div className={"px-12"}>{props.center}</div>*/}
-
-                <AnimatePresence>
-                  <motion.main
-                    key={location.pathname}
-                    variants={variants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                  >
-                    {props.center}
-                  </motion.main>
-                </AnimatePresence>
+                <div className={"px-12"}>{props.center}</div>
               </main>
               <div id={"right-column"} className={"w-64 py-16"}>
                 {props.right}

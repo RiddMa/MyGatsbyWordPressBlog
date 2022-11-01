@@ -2,43 +2,43 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 import parse from "html-react-parser"
-import Seo from "../components/seo"
-import Bio from "../components/bio"
+import Seo from "../seo"
+import Bio from "../bio"
+import Typography from "@mui/material/Typography"
+import { useElementSize } from "usehooks-ts"
+import _ from "lodash"
 // We're using Gutenberg so we need the block styles
 // these are copied into this project due to a conflict in the postCSS
 // version used by the Gatsby and @wordpress packages that causes build
 // failures.
 // @todo update this once @wordpress upgrades their postcss version
-import "../css/@wordpress/block-library/build-style/style.css"
-import "../css/@wordpress/block-library/build-style/theme.css"
-import Typography from "@mui/material/Typography"
+import "../../css/@wordpress/block-library/build-style/style.css"
+import "../../css/@wordpress/block-library/build-style/theme.css"
 
-const BlogPostBody = ({ previous, next, post }) => {
-  const featuredImage = {
-    data: post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
-    alt: post.featuredImage?.node?.alt || ``,
-  }
-  console.log(post)
-  // return <div dangerouslySetInnerHTML={{ __html: props["post"]["content"] }} />
+const BlogPostBody = ({ previous, next, post, featuredImage }) => {
+  // 计算正确的封面图高度
+  const [
+    postBodyRef,
+    { width: postBodyWidth, height: postBodyHeight },
+  ] = useElementSize()
+  const imgWidth = _.get(featuredImage, "data.width", 0)
+  const imgHeight = _.get(featuredImage, "data.height", 0)
+  let paddingTop = imgWidth
+    ? `${postBodyWidth * (imgHeight / imgWidth) + 24}px`
+    : "0"
+
   return (
-    <div className={"flex flex-col"}>
-      {/* if we have a featured image for this post let's display it */}
-      {featuredImage?.data && (
-        <GatsbyImage
-          image={featuredImage.data}
-          alt={featuredImage.alt}
-          className={
-            "rounded-t-3xl rounded-b-none -mx-8 -mt-8 mb-12 sticky w-full self-start"
-          }
-        />
-      )}
+    <div
+      ref={postBodyRef}
+      className={"flex flex-col"}
+      style={{ paddingTop: paddingTop }}
+    >
       <div
         className={
           "card flex flex-col p-8 border-none rounded-3xl drop-shadow-lg content-bg"
         }
       >
         {/*<Seo title={post.title} description={post.excerpt} />*/}
-
         <article
           className="blog-post text-primary"
           itemScope

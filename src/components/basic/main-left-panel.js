@@ -14,8 +14,8 @@ import {
 import Typography from "@mui/material/Typography"
 import GitHubIcon from "@mui/icons-material/GitHub"
 
-import DarkModeToggle from "./basic/dark-mode-toggle"
-import { RdButton } from "./rd-button"
+import DarkModeToggle from "./dark-mode-toggle"
+import { RdButton } from "../rd-button"
 import Button from "@mui/material/Button";
 
 const MainLeftPanel = props => {

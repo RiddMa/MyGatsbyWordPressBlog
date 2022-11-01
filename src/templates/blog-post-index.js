@@ -5,9 +5,9 @@ import parse from "html-react-parser"
 import Bio from "../components/bio"
 import Seo from "../components/seo"
 import ThreeColumn from "../components/layout/three-column"
-import MainLeftPanel from "../components/main-left-panel"
+import MainLeftPanel from "../components/basic/main-left-panel"
 import BlogPostIndexEntry from "../components/basic/blog-post-index-entry"
-import MainRightPanel from "../components/main-right-panel"
+import MainRightPanel from "../components/basic/main-right-panel"
 
 const BlogPostIndex = ({
   data,

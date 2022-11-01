@@ -41,3 +41,8 @@ const MyThemeProvider = props => {
     </ThemeProvider>
   )
 }
+
+
+// export const wrapPageElement = ({element}) => (
+//   <AnimatePresence exitBeforeEnter>{element}</AnimatePresence>
+// );

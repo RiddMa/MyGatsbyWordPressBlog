@@ -2,11 +2,11 @@ import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { Scrollbars } from "react-custom-scrollbars-2"
 import "/src/css/ridd.css"
-import Footer from "../footer"
+import Footer from "../basic/footer"
 import ResponsiveAppBar from "../responsive-app-bar"
 import Container from "@mui/material/Container"
 import Box from "@mui/material/Box"
-import MainLeftPanel from "../main-left-panel"
+import MainLeftPanel from "../basic/main-left-panel"
 
 const MyLayout = props => {
   // const {

@@ -1,9 +1,10 @@
 import React from "react"
 import Typography from "@mui/material/Typography"
-import Container from "@mui/material/Container"
 import { Link } from "@mui/material"
 import { StaticImage } from "gatsby-plugin-image"
 import { useSelector } from "react-redux"
+
+import CcByNcSaSvg from "../../../content/assets/Cc-by-nc-sa_icon.svg"
 
 const Footer = props => {
   return (
@@ -15,17 +16,34 @@ const Footer = props => {
         color={"text.hint"}
         className={"text-center"}
       >
-        ©{" "}
+        <span>© </span>
         <Link
           href={"https://riddma.com"}
           target="_blank"
           rel="noopener noreferrer"
-          className={"text-secondary"}
+          className={"text-hint"}
         >
           Ridd
         </Link>{" "}
-        since 2022.
+        <span>创建于 2022。</span>
       </Typography>
+      <div className={"flex flex-col place-items-center space-y-2"}>
+        <Link
+          href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={CcByNcSaSvg} alt={"CC-BY-NC-SA Logo"} height={"55px"}></img>
+        </Link>
+        <Typography
+          variant="body2"
+          component={"span"}
+          color={"text.hint"}
+          className={"text-center"}
+        >
+          如非特殊说明，适用 CC-BY-NC-SA 4.0 协议。
+        </Typography>
+      </div>
       <div className={"flex flex-col place-items-center space-y-2"}>
         <Typography
           variant="body2"
@@ -33,9 +51,11 @@ const Footer = props => {
           color={"text.hint"}
           className={"text-center"}
         >
-          Built with
+          使用如下工具构建：
         </Typography>
-        <div className={"flex flex-row justify-center space-x-2 gap-y-4 flex-wrap"}>
+        <div
+          className={"flex flex-row justify-center space-x-2 gap-y-4 flex-wrap"}
+        >
           <Link
             href="https://reactjs.org/"
             target="_blank"
@@ -127,7 +147,6 @@ const Footer = props => {
           color={"text.hint"}
           className={"text-center"}
         >
-          Theme{" "}
           <Link
             href={""}
             target="_blank"
@@ -136,7 +155,7 @@ const Footer = props => {
           >
             ReStack
           </Link>{" "}
-          designed by{" "}
+          主题由{" "}
           <Link
             href={"https://github.com/RiddMa"}
             target="_blank"
@@ -145,30 +164,37 @@ const Footer = props => {
           >
             Ridd
           </Link>
-          ,
-          <br />
-          inspired by
+          {" "}设计，受{" "}
+          <Link
+            href={"https://stack.jimmycai.com/"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={"text-hint"}
+          >
+            Stack
+          </Link>
+          {" "}启发。
         </Typography>
-        <Link
-          href={"https://stack.jimmycai.com/"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={
-            "flex flex-col place-items-center space-y-1 w-14 text-hint"
-          }
-          variant={"caption"}
-        >
-          <StaticImage
-            src={
-              "https://user-images.githubusercontent.com/5889006/190859553-5b229b4f-c476-4cbd-928f-890f5265ca4c.png"
-            }
-            alt={"Logo of Hugo Theme Stack"}
-            layout={"fixed"}
-            placeholder={"blurred"}
-            width={45}
-          ></StaticImage>
-          <span>Stack</span>
-        </Link>
+        {/*<Link*/}
+        {/*  href={"https://stack.jimmycai.com/"}*/}
+        {/*  target="_blank"*/}
+        {/*  rel="noopener noreferrer"*/}
+        {/*  className={*/}
+        {/*    "flex flex-col place-items-center space-y-1 w-14 text-hint"*/}
+        {/*  }*/}
+        {/*  variant={"caption"}*/}
+        {/*>*/}
+        {/*  <StaticImage*/}
+        {/*    src={*/}
+        {/*      "https://user-images.githubusercontent.com/5889006/190859553-5b229b4f-c476-4cbd-928f-890f5265ca4c.png"*/}
+        {/*    }*/}
+        {/*    alt={"Logo of Hugo Theme Stack"}*/}
+        {/*    layout={"fixed"}*/}
+        {/*    placeholder={"blurred"}*/}
+        {/*    width={45}*/}
+        {/*  ></StaticImage>*/}
+        {/*  <span></span>*/}
+        {/*</Link>*/}
       </div>
     </div>
   )

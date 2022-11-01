@@ -1,4 +1,5 @@
 import React from "react"
+import _ from "lodash"
 import { Link, graphql } from "gatsby"
 import { GatsbyImage } from "gatsby-plugin-image"
 import parse from "html-react-parser"
@@ -12,21 +13,35 @@ import "../css/@wordpress/block-library/build-style/style.css"
 import "../css/@wordpress/block-library/build-style/theme.css"
 
 import ThreeColumn from "../components/layout/three-column"
-import MainLeftPanel from "../components/main-left-panel"
-import MainRightPanel from "../components/main-right-panel"
-import BlogPostBody from "../components/blog-post-body"
+import MainLeftPanel from "../components/basic/main-left-panel"
+import MainRightPanel from "../components/basic/main-right-panel"
+import BlogPostBody from "../components/post/blog-post-body"
+import ThreeColumnPost from "../components/layout/three-column-post"
+import BlogPostHeader from "../components/post/blog-post-header"
 
 const BlogPostTemplate = ({ data: { previous, next, post } }) => {
-  const featuredImage = {
-    data: post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
-    alt: post.featuredImage?.node?.alt || ``,
-  }
   console.log(post)
+  const featuredImage = {
+    data: _.get(
+      post,
+      "featuredImage.node.localFile.childImageSharp.gatsbyImageData",
+      null
+    ),
+    alt: _.get(post, "featuredImage.node.alt", ""),
+  }
 
   return (
-    <ThreeColumn
+    <ThreeColumnPost
       left={<MainLeftPanel />}
-      center={<BlogPostBody previous={previous} next={next} post={post} />}
+      header={<BlogPostHeader post={post} featuredImage={featuredImage} />}
+      center={
+        <BlogPostBody
+          previous={previous}
+          next={next}
+          post={post}
+          featuredImage={featuredImage}
+        />
+      }
       right={<MainRightPanel />}
     />
   )
@@ -53,8 +68,9 @@ export const pageQuery = graphql`
             childImageSharp {
               gatsbyImageData(
                 quality: 100
-                placeholder: TRACED_SVG
+                placeholder: BLURRED
                 layout: FULL_WIDTH
+                formats: AUTO
               )
             }
           }
