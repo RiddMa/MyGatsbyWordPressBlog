@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-import parse from "html-react-parser"
+import _ from "lodash"
 
 import Bio from "../components/bio"
 import Seo from "../components/seo"
@@ -8,12 +8,18 @@ import ThreeColumn from "../components/layout/three-column"
 import MainLeftPanel from "../components/basic/main-left-panel"
 import BlogPostIndexEntry from "../components/basic/blog-post-index-entry"
 import MainRightPanel from "../components/basic/main-right-panel"
+import BlogPostPagination from "../components/basic/blog-post-pagination"
 
-const BlogPostIndex = ({
-  data,
-  pageContext: { nextPagePath, previousPagePath },
-}) => {
-  const posts = data["allWpPost"]["nodes"]
+const BlogPostIndex = props => {
+  console.log(props)
+  const posts = _.get(props, "data.allWpPost.nodes")
+  const {
+    nextPagePath,
+    previousPagePath,
+    postsPerPage,
+    currentPage,
+    totalPages,
+  } = _.get(props, "pageContext")
 
   return (
     <ThreeColumn
@@ -21,7 +27,10 @@ const BlogPostIndex = ({
       center={
         <BlogPostList
           posts={posts}
-          pageContext={{ nextPagePath, previousPagePath }}
+          pageContext={{
+            currentPage,
+            totalPages,
+          }}
         />
       }
       right={<MainRightPanel />}
@@ -31,9 +40,8 @@ const BlogPostIndex = ({
 
 const BlogPostList = ({
   posts,
-  pageContext: { nextPagePath, previousPagePath },
+  pageContext: { currentPage, totalPages },
 }) => {
-  console.log(posts, nextPagePath, previousPagePath)
   if (!posts.length) {
     return (
       <div>
@@ -47,7 +55,13 @@ const BlogPostList = ({
     )
   }
   return (
-    <div className={"flex flex-col gap-y-8"}>
+    <div className={"flex flex-col gap-y-8 items-stretch"}>
+      <div className={"flex flex-row justify-center"}>
+        <BlogPostPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+        ></BlogPostPagination>
+      </div>
       {posts.map(item => {
         return (
           <BlogPostIndexEntry
@@ -57,6 +71,12 @@ const BlogPostList = ({
           ></BlogPostIndexEntry>
         )
       })}
+      <div className={"flex flex-row justify-center"}>
+        <BlogPostPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+        ></BlogPostPagination>
+      </div>
     </div>
   )
 }
@@ -109,55 +129,3 @@ export const pageQuery = graphql`
     }
   }
 `
-
-// export const pageQuery = graphql`
-//   query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
-//     allWpPost(
-//       sort: { fields: [date], order: DESC }
-//       limit: $postsPerPage
-//       skip: $offset
-//     ) {
-//       nodes {
-//         uri
-//         date(formatString: "YYYY-MM-DD")
-//         dateGmt(formatString: "YYYY-MM-DD")
-//         title
-//         excerpt
-//         categories {
-//           nodes {
-//             id
-//             name
-//             slug
-//             uri
-//           }
-//         }
-//         featuredImage {
-//           node {
-//             caption
-//             altText
-//             description
-//             title
-//             localFile {
-//               childImageSharp {
-//                 fluid(
-//                   cropFocus: ATTENTION
-//                   maxHeight: 300
-//                   maxWidth: 300
-//                   quality: 30
-//                   toFormat: AUTO
-//                 ) {
-//                   base64
-//                   tracedSVG
-//                   srcWebp
-//                   srcSetWebp
-//                   originalImg
-//                   originalName
-//                 }
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   }
-// `

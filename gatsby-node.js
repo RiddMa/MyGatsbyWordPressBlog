@@ -85,6 +85,8 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
   const postsChunkedIntoArchivePages = chunk(posts, postsPerPage)
   const totalPages = postsChunkedIntoArchivePages.length
 
+  // console.log(totalPages, postsChunkedIntoArchivePages)
+
   return Promise.all(
     postsChunkedIntoArchivePages.map(async (_posts, index) => {
       const pageNumber = index + 1
@@ -115,6 +117,8 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
           offset: index * postsPerPage,
           // We need to tell the template how many posts to display too
           postsPerPage,
+          currentPage: pageNumber,
+          totalPages,
           nextPagePath: getPagePath(pageNumber + 1),
           previousPagePath: getPagePath(pageNumber - 1),
         },

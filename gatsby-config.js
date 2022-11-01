@@ -36,6 +36,9 @@ module.exports = {
           generateWebpImages: true,
           placeholderType: "blurred",
         },
+        schema: {
+          timeout: 300000,
+        },
       },
     },
 
@@ -84,5 +87,7 @@ module.exports = {
      */
     // `gatsby-plugin-offline`,
     "gatsby-plugin-postcss",
+
+    `gatsby-plugin-transition-link`,
   ],
 }

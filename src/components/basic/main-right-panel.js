@@ -3,7 +3,9 @@ import { TextField } from "@mui/material"
 
 const MainRightPanel = props => {
   return (
-    <div className={"flex flex-col space-y-4 fixed max-h-screen w-inherit text-secondary"}>
+    <div
+      className={"flex flex-col space-y-4 m-0 p-0 max-h-screen text-secondary"}
+    >
       <span>this is a simple right panel.</span>
       <div id={"search-bar"}>
         <TextField label="搜索..." />

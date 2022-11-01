@@ -6,7 +6,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 
 const BlogPostIndexEntry = props => {
   const post = props.data
-  console.log(post)
+  // console.log(post)
 
   const featuredImage = {
     data: post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData,
@@ -18,7 +18,7 @@ const BlogPostIndexEntry = props => {
   return (
     <div
       className={
-        "card flex flex-row p-6 border-none rounded-3xl drop-shadow-lg content-bg space-x-4"
+        "card flex flex-row p-8 border-none rounded-3xl drop-shadow-lg content-bg space-x-4 max-w-full"
       }
     >
       {hasImage && (
@@ -33,7 +33,7 @@ const BlogPostIndexEntry = props => {
         </div>
       )}
 
-      <div className={(hasImage ? "" : "") + " card-body flex flex-col"}>
+      <div className={(hasImage ? "" : "") + " card-body flex flex-col w-full"}>
         <Link className={"flex flex-col no-underline"} href={post["uri"]}>
           <Typography
             variant="h5"

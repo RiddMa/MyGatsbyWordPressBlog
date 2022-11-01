@@ -79,6 +79,10 @@
     }
 }
 
+/*body {*/
+/*    overflow: hidden; !* Hide scrollbars *!*/
+/*}*/
+
 :root {
     --scroll: 0
 }

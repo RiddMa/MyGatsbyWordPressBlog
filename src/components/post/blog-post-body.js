@@ -30,12 +30,12 @@ const BlogPostBody = ({ previous, next, post, featuredImage }) => {
   return (
     <div
       ref={postBodyRef}
-      className={"flex flex-col"}
+      className={"flex flex-col m-0 px-0"}
       style={{ paddingTop: paddingTop }}
     >
       <div
         className={
-          "card flex flex-col p-8 border-none rounded-3xl drop-shadow-lg content-bg"
+          "card flex flex-col m-0 p-8 border-none rounded-3xl drop-shadow-lg content-bg"
         }
       >
         {/*<Seo title={post.title} description={post.excerpt} />*/}

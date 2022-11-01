@@ -11,11 +11,13 @@ import "./src/css/normalize.css"
 import "./src/css/ridd.css"
 
 import React, { useEffect } from "react"
-import {  ThemeProvider } from "@mui/material"
+import { ThemeProvider } from "@mui/material"
 import { Provider, useDispatch, useSelector } from "react-redux"
 import store from "./src/components/rematch/store"
 import { StyledEngineProvider } from "@mui/material/styles"
 import { darkTheme, lightTheme } from "./src/css/theme"
+
+import { AnimatePresence } from "framer-motion"
 
 export const wrapRootElement = ({ element }) => {
   return (
@@ -42,7 +44,6 @@ const MyThemeProvider = props => {
   )
 }
 
-
-// export const wrapPageElement = ({element}) => (
-//   <AnimatePresence exitBeforeEnter>{element}</AnimatePresence>
-// );
+export const wrapPageElement = ({ element }) => (
+  <AnimatePresence>{element}</AnimatePresence>
+)

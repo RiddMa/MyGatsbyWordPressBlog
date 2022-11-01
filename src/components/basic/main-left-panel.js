@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import {
   Avatar,
@@ -16,7 +16,7 @@ import GitHubIcon from "@mui/icons-material/GitHub"
 
 import DarkModeToggle from "./dark-mode-toggle"
 import { RdButton } from "../rd-button"
-import Button from "@mui/material/Button";
+import Button from "@mui/material/Button"
 
 const MainLeftPanel = props => {
   const data = useStaticQuery(graphql`
@@ -57,7 +57,6 @@ const MainLeftPanel = props => {
   const siteTitle = generalSettings["title"]
   const siteDesc = generalSettings["description"]
 
-
   // const [width, setWidth] = useState(0);
   // const div = useCallback(node => {
   //   if (node !== null) {
@@ -66,7 +65,7 @@ const MainLeftPanel = props => {
   // }, []);
 
   return (
-    <div className={"flex flex-col space-y-4 fixed max-h-screen w-inherit"}>
+    <div className={"flex flex-col space-y-4 m-0 p-0 max-h-screen"}>
       <Avatar
         className={"avatar"}
         alt={username}
@@ -104,9 +103,12 @@ const MainLeftPanel = props => {
         </Link>
       </div>
       <div className={"flex flex-col gap-y-4"}>
-        <Button className={"rd-button"} href={"/"}>主页</Button>
-        <Button className={"rd-button"} href={"/blog"}>博客</Button>
-
+        <Button className={"rd-button"} href={"/"}>
+          主页
+        </Button>
+        <Button className={"rd-button"} href={"/blog"}>
+          博客
+        </Button>
       </div>
       <DarkModeToggle></DarkModeToggle>
       <RdButton>test</RdButton>

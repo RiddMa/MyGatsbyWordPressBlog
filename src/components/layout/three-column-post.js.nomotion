@@ -4,31 +4,6 @@ import Footer from "../basic/footer"
 import { Scrollbars } from "react-custom-scrollbars-2"
 import { useElementSize } from "usehooks-ts"
 
-import { motion, AnimatePresence } from "framer-motion"
-
-const duration = 0.5
-const variants = {
-  initial: {
-    opacity: 0,
-    // x: 500,
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    x: 0,
-    transition: {
-      duration: duration,
-      delay: duration,
-      when: "beforeChildren",
-    },
-  },
-  exit: {
-    opacity: 0,
-    // x: 500,
-    transition: { duration: duration },
-  },
-}
-
 const ThreeColumn = props => {
   const [postRef, { width: postWidth, height: postHeight }] = useElementSize()
   const scrollRef = useRef(null)
@@ -62,30 +37,20 @@ const ThreeColumn = props => {
               <div id={"left-column"} className={"w-64 py-16"}>
                 {props.left}
               </div>
-              {/*<main*/}
-              {/*  id={"center-column"}*/}
-              {/*  className={"flex flex-col basis-8/12 py-16"}*/}
-              {/*>*/}
-              <motion.main
+              <main
                 id={"center-column"}
-                className={"flex flex-col basis-8/12 py-16 px-12"}
-                key={window.location.pathname}
-                variants={variants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
+                className={"flex flex-col basis-8/12 py-16"}
               >
                 <div
-                  className={"fixed"}
+                  className={"fixed mx-12"}
                   style={{ width: postWidth, zIndex: 0 }}
                 >
                   {props.header}
                 </div>
-                <div ref={postRef} style={{ zIndex: 1 }}>
+                <div ref={postRef} className={"mx-12"} style={{ zIndex: 1 }}>
                   {props.center}
                 </div>
-              </motion.main>
-              {/*</main>*/}
+              </main>
               <div id={"right-column"} className={"w-64 py-16"}>
                 {props.right}
               </div>
