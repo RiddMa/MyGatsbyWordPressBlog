@@ -64,6 +64,10 @@
     @apply justify-center
 }
 
+.nav-button-text{
+    @apply text-slate-700 dark:text-slate-400 group-hover:text-sky-600 dark:group-hover:text-sky-400
+}
+
 .w-inherit {
     width: inherit !important;
 }

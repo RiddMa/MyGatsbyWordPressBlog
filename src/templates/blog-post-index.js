@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link, graphql } from "gatsby"
 import _ from "lodash"
 
@@ -10,8 +10,11 @@ import BlogPostIndexEntry from "../components/basic/blog-post-index-entry"
 import MainRightPanel from "../components/basic/main-right-panel"
 import BlogPostPagination from "../components/basic/blog-post-pagination"
 
+import { AnimatePresence, motion } from "framer-motion"
+import MediaCard from "../components/basic/media-card"
+
 const BlogPostIndex = props => {
-  console.log(props)
+  // console.log(props)
   const posts = _.get(props, "data.allWpPost.nodes")
   const {
     nextPagePath,
@@ -41,7 +44,22 @@ const BlogPostIndex = props => {
 const BlogPostList = ({
   posts,
   pageContext: { currentPage, totalPages },
+  path,
 }) => {
+  const duration = 0.25
+  const variants = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: duration,
+        delay: duration,
+        when: "beforeChildren",
+      },
+    },
+    exit: { opacity: 0, transition: { duration: duration } },
+  }
+
   if (!posts.length) {
     return (
       <div>
@@ -55,23 +73,32 @@ const BlogPostList = ({
     )
   }
   return (
-    <div className={"flex flex-col gap-y-8 items-stretch"}>
-      <div className={"flex flex-row justify-center"}>
+    <div className={"grid grid-flow-row sm:gap-y-4 2xl:gap-y-8 break-words min-w-0"}>
+      <div className={"grid grid-flow-col justify-center"}>
         <BlogPostPagination
           currentPage={currentPage}
           totalPages={totalPages}
         ></BlogPostPagination>
       </div>
-      {posts.map(item => {
-        return (
-          <BlogPostIndexEntry
-            key={item["uri"]}
-            data={item}
-            className={"mb-4"}
-          ></BlogPostIndexEntry>
-        )
-      })}
-      <div className={"flex flex-row justify-center"}>
+      <motion.div
+        className={"grid grid-flow-row sm:gap-y-4 2xl:gap-y-8 break-words min-w-0"}
+        key={`post-index-page-${path}`}
+        variants={variants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+      >
+        {posts.map(item => {
+          return (
+            <BlogPostIndexEntry
+              key={item["uri"]}
+              data={item}
+              className={"mb-4 flex-auto"}
+            ></BlogPostIndexEntry>
+          )
+        })}
+      </motion.div>
+      <div className={"grid grid-flow-col justify-center"}>
         <BlogPostPagination
           currentPage={currentPage}
           totalPages={totalPages}

@@ -4,7 +4,7 @@ import { Scrollbars } from "react-custom-scrollbars-2"
 
 import { motion, AnimatePresence } from "framer-motion"
 
-const duration = 0.5
+const duration = 0.25
 const variants = {
   initial: {
     opacity: 0,
@@ -139,18 +139,10 @@ const ThreeColumn = props => {
         >
           {props.left}
         </div>
-        <div className={"flex flex-col"}>
-          <motion.main
-            id={"center-column"}
-            className={"py-16 sm:px-4 xl:px-8 2xl:px-12"}
-            key={window.location.pathname}
-            variants={variants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
+        <div className={"grid grid-flow-row"}>
+          <main className={"py-16 sm:px-4 xl:px-8 2xl:px-12"}>
             {props.center}
-          </motion.main>
+          </main>
           <Footer />
         </div>
         <div
@@ -158,7 +150,6 @@ const ThreeColumn = props => {
           className={
             "box-border sticky top-0 max-h-screen py-16 sm:mr-4 xl:mr-8 ml-0"
           }
-          // className={"min-w-0 sm:w-48 lg:w-56 2xl:w-64 py-16 sm:px-2 xl:px-4"}
         >
           {props.right}
         </div>

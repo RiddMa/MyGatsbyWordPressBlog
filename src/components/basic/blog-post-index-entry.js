@@ -3,6 +3,7 @@ import { Link } from "@mui/material"
 import Typography from "@mui/material/Typography"
 import parse from "html-react-parser"
 import { GatsbyImage } from "gatsby-plugin-image"
+import _ from "lodash"
 
 const BlogPostIndexEntry = props => {
   const post = props.data
@@ -15,10 +16,17 @@ const BlogPostIndexEntry = props => {
   const hasImage =
     post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData
 
+  console.log(post.excerpt)
+  const customExcerpt = String(_.get(post, "excerpt")).replace(
+    /\[&hellip;]<\/p>/,
+    "&hellip;</p>"
+  )
+  console.log(customExcerpt)
+
   return (
     <div
       className={
-        "card flex flex-row p-8 border-none rounded-3xl drop-shadow-lg content-bg space-x-4 max-w-full"
+        "card flex flex-row flex-auto sm:p-6 2xl:p-8 border-none rounded-3xl drop-shadow-lg content-bg space-x-4 break-words min-w-0"
       }
     >
       {hasImage && (
@@ -33,21 +41,26 @@ const BlogPostIndexEntry = props => {
         </div>
       )}
 
-      <div className={(hasImage ? "" : "") + " card-body flex flex-col w-full"}>
+      <div
+        className={
+          (hasImage ? "" : "") +
+          " card-body flex flex-col w-full break-words min-w-0"
+        }
+      >
         <Link className={"flex flex-col no-underline"} href={post["uri"]}>
           <Typography
             variant="h5"
             component={"span"}
-            className={"text-primary"}
+            className={"text-primary break-words min-w-0"}
           >
             {post["title"]}
           </Typography>
           <Typography
             variant="body1"
             component={"span"}
-            className={"text-secondary"}
+            className={"text-secondary line-clamp-3"}
           >
-            {parse(post["excerpt"])}
+            {parse(customExcerpt)}
           </Typography>
         </Link>
         <div className={"grow"}></div>
@@ -55,18 +68,20 @@ const BlogPostIndexEntry = props => {
           <Typography
             variant="body1"
             component={"span"}
-            className={"text-hint"}
+            className={"text-hint break-words min-w-0"}
           >
             分类：
             {post.categories?.nodes?.map(item => {
               return (
-                <Link
-                  key={item.uri}
-                  className={"text-hint mr-2"}
-                  href={item.uri}
-                >
-                  {item.name}
-                </Link>
+                <>
+                  <Link
+                    key={item.uri}
+                    className={"text-hint mr-2"}
+                    href={item.uri}
+                  >
+                    {item.name}
+                  </Link>{" "}
+                </>
               )
             })}
           </Typography>

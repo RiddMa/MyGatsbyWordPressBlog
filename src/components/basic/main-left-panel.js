@@ -1,22 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import {
-  Avatar,
-  Container,
-  Link,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-  Stack,
-} from "@mui/material"
-import Typography from "@mui/material/Typography"
-import GitHubIcon from "@mui/icons-material/GitHub"
+import { Avatar, Link, Typography, Button } from "@mui/material"
 
-import DarkModeToggle from "./dark-mode-toggle"
-import { RdButton } from "../rd-button"
-import Button from "@mui/material/Button"
+import GitHubIcon from "@mui/icons-material/GitHub"
+import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 
 const MainLeftPanel = props => {
   const data = useStaticQuery(graphql`
@@ -57,13 +44,6 @@ const MainLeftPanel = props => {
   const siteTitle = generalSettings["title"]
   const siteDesc = generalSettings["description"]
 
-  // const [width, setWidth] = useState(0);
-  // const div = useCallback(node => {
-  //   if (node !== null) {
-  //     setWidth(node.getElementById("left-column").width);
-  //   }
-  // }, []);
-
   return (
     <div className={"flex flex-col space-y-4 m-0 p-0 max-h-screen"}>
       <Avatar
@@ -102,18 +82,109 @@ const MainLeftPanel = props => {
           <GitHubIcon className={"text-primary"}></GitHubIcon>
         </Link>
       </div>
-      <div className={"flex flex-col gap-y-4"}>
-        <Button className={"rd-button"} href={"/"}>
-          主页
-        </Button>
-        <Button className={"rd-button"} href={"/blog"}>
-          博客
-        </Button>
+      <div className={"flex flex-col sm:gap-y-2 lg:gap-y-4"}>
+        <NavButton href={"/"}>主页</NavButton>
+        <NavButton href={"/blog"}>博客</NavButton>
+        <NavButton href={"/photography"}>相册</NavButton>
       </div>
-      <DarkModeToggle></DarkModeToggle>
-      <RdButton>test</RdButton>
     </div>
   )
 }
 
 export default MainLeftPanel
+
+const NavButton = props => {
+  return (
+    <div className={"h-9 m-0 p-0 w-full flex flex-row justify-center"}>
+      <Button
+        href={props.href}
+        className={
+          "m-1 p-0 w-full group transition-all ease-out rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 hover:m-0 hover:p-1"
+        }
+      >
+        <div className={"m-0 p-0 rounded-lg website-bg w-full h-full"}>
+          <div
+            className={
+              "nav-button-text mx-auto w-fit grid grid-flow-col place-items-center"
+            }
+          >
+            <span
+              className={
+                "m-0 p-0 transition-all ease-out translate-x-2 group-hover:translate-x-1"
+              }
+            >
+              {props.children}
+            </span>
+            <ChevronRightIcon
+              className={
+                "m-0 p-0 mt-0.5 transition-all ease-out scale-0 group-hover:scale-100 -translate-x-5 group-hover:translate-x-1"
+              }
+            ></ChevronRightIcon>
+          </div>
+        </div>
+      </Button>
+    </div>
+  )
+}
+
+const Test = props => {
+  return (
+    <>
+      <button className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+        <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+          Cyan to blue
+        </span>
+      </button>
+
+      <a
+        href="#_"
+        className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 relative hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300"
+      >
+        <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+        <span className="relative">Button Text</span>
+      </a>
+
+      <a
+        href="#_"
+        className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-indigo-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group"
+      >
+        <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-indigo-600 group-hover:h-full"></span>
+        <span className="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">
+          <svg
+            className="w-5 h-5 text-green-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            ></path>
+          </svg>
+        </span>
+        <span className="absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200">
+          <svg
+            className="w-5 h-5 text-green-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M14 5l7 7m0 0l-7 7m7-7H3"
+            ></path>
+          </svg>
+        </span>
+        <span className="relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white">
+          Button Text
+        </span>
+      </a>
+    </>
+  )
+}

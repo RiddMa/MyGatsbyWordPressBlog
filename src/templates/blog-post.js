@@ -20,7 +20,7 @@ import ThreeColumnPost from "../components/layout/three-column-post"
 import BlogPostHeader from "../components/post/blog-post-header"
 
 const BlogPostTemplate = ({ data: { previous, next, post } }) => {
-  console.log(post)
+  // console.log(post)
   const featuredImage = {
     data: _.get(
       post,
