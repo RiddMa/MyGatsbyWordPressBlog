@@ -56,6 +56,10 @@
     @apply text-slate-400 dark:text-slate-500
 }
 
+.text-hint-hover-href {
+    @apply text-slate-400 dark:text-slate-500 group-hover:text-sky-600 dark:group-hover:text-sky-400
+}
+
 .text-href {
     @apply text-sky-600 dark:text-sky-400
 }
@@ -64,7 +68,7 @@
     @apply justify-center
 }
 
-.nav-button-text{
+.text-secondary-hover-href {
     @apply text-slate-700 dark:text-slate-400 group-hover:text-sky-600 dark:group-hover:text-sky-400
 }
 
@@ -95,4 +99,8 @@
     animation: moveBehindAnim 1.1s ease-out infinite;
     animation-play-state: paused;
     animation-delay: calc(var(--scroll) * -1s);
+}
+
+.testImg {
+    z-index: 0 !important;
 }

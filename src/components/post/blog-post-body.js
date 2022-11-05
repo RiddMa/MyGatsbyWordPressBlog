@@ -31,8 +31,9 @@ const BlogPostBody = ({ previous, next, post, featuredImage }) => {
     <div
       ref={postBodyRef}
       className={"flex flex-col m-0 px-0"}
-      style={{ paddingTop: paddingTop }}
+      style={{ paddingTop: 0 }}
     >
+      <div className={"z-10"} style={{ width: "100%", height: paddingTop }}></div>
       <div
         className={
           "card flex flex-col m-0 p-8 border-none rounded-3xl drop-shadow-lg content-bg"
@@ -64,7 +65,9 @@ const BlogPostBody = ({ previous, next, post, featuredImage }) => {
           </header>
 
           {!!post.content && (
-            <section itemProp="articleBody">{parse(post.content)}</section>
+            <section itemProp="articleBody" className={"prose"}>
+              {parse(post.content)}
+            </section>
           )}
 
           <hr />

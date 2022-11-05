@@ -24,12 +24,11 @@ const BlogPostHeader = ({ post, featuredImage }) => {
 
   return (
     <div className={"w-full moveBehind m-0 p-0"}>
-      {/*if we have a featured image for this post let's display it*/}
       {featuredImage && (
         <GatsbyImage
           image={featuredImage.data}
           alt={featuredImage.alt}
-          className={"rounded-3xl w-full m-0 p-0"}
+          className={"rounded-3xl w-full m-0 p-0 testImg"}
         />
       )}
     </div>

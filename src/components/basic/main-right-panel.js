@@ -1,6 +1,8 @@
 import React from "react"
 import { TextField } from "@mui/material"
-import DarkModeToggle from "./dark-mode-toggle";
+import DarkModeToggle from "./dark-mode-toggle"
+import CategoryDisplay from "./category-display"
+import TagDisplay from "./tag-display"
 
 const MainRightPanel = props => {
   return (
@@ -17,12 +19,10 @@ const MainRightPanel = props => {
         <span>一个归档列表</span>
       </div>
       <div className={"flex flex-col"}>
-        <span>分类Categories</span>
-        <span>一个分类列表</span>
+        <CategoryDisplay></CategoryDisplay>
       </div>
       <div className={"flex flex-col"}>
-        <span>标签Tags</span>
-        <span>一个标签列表</span>
+        <TagDisplay></TagDisplay>
       </div>
     </div>
   )

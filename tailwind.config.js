@@ -10,14 +10,15 @@ module.exports = {
     "./src/templates/**/*.{js,jsx,ts,tsx}",
   ],
   important: "#___gatsby",
-  theme: {
-    extend: {},
-  },
+  theme: {},
   variants: {
     textColor: ["group-hover"],
     extend: {
       display: ["dark"],
     },
   },
-  plugins: [require("@tailwindcss/line-clamp")],
+  plugins: [
+    require("@tailwindcss/line-clamp"),
+    require("@tailwindcss/typography"),
+  ],
 }

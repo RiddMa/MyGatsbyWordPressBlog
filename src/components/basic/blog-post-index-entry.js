@@ -16,12 +16,10 @@ const BlogPostIndexEntry = props => {
   const hasImage =
     post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData
 
-  console.log(post.excerpt)
   const customExcerpt = String(_.get(post, "excerpt")).replace(
     /\[&hellip;]<\/p>/,
     "&hellip;</p>"
   )
-  console.log(customExcerpt)
 
   return (
     <div
@@ -73,15 +71,11 @@ const BlogPostIndexEntry = props => {
             分类：
             {post.categories?.nodes?.map(item => {
               return (
-                <>
-                  <Link
-                    key={item.uri}
-                    className={"text-hint mr-2"}
-                    href={item.uri}
-                  >
+                <span key={item.uri}>
+                  <Link className={"text-hint mr-2"} href={item.uri}>
                     {item.name}
                   </Link>{" "}
-                </>
+                </span>
               )
             })}
           </Typography>
