@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import { Avatar, Link, Typography, Button } from "@mui/material"
+import { Icon } from "@iconify/react"
 
 import GitHubIcon from "@mui/icons-material/GitHub"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
@@ -52,11 +53,11 @@ const MainLeftPanel = props => {
         src={avatar}
         sx={{ width: 150, height: 150 }}
       ></Avatar>
-      <Link href={"/"} className={"title"}>
+      <Link href={"/"} className={"title no-underline group"}>
         <Typography
           variant={"h5"}
           component={"h1"}
-          className={"href-text text-primary"}
+          className={"text-secondary-hover-href text-primary"}
           // color={"primary"}
         >
           {siteTitle}
@@ -83,9 +84,24 @@ const MainLeftPanel = props => {
         </Link>
       </div>
       <div className={"flex flex-col sm:gap-y-2 lg:gap-y-4"}>
-        <NavButton href={"/"}>主页</NavButton>
-        <NavButton href={"/blog"}>博客</NavButton>
-        <NavButton href={"/photography"}>相册</NavButton>
+        <NavButton href={"/"}>
+          <div className={"grid grid-flow-col items-center gap-x-2"}>
+            <Icon icon="bx:home" className={"w-6 h-full"} />
+            <span>主页</span>
+          </div>
+        </NavButton>
+        <NavButton href={"/blog"}>
+          <div className={"grid grid-flow-col items-center gap-x-2"}>
+            <Icon icon="icomoon-free:blog" className={"w-6 h-full"} />
+            <span>博客</span>
+          </div>
+        </NavButton>
+        <NavButton href={"/photography"}>
+          <div className={"grid grid-flow-col items-center gap-x-2"}>
+            <Icon icon="clarity:image-gallery-line" className={"w-6 h-full"} />
+            <span>相册</span>
+          </div>
+        </NavButton>
       </div>
     </div>
   )

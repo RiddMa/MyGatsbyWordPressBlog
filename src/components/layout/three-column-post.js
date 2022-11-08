@@ -133,7 +133,11 @@ const ThreeColumn = props => {
             <div className={"fixed"} style={{ width: postWidth, zIndex: 0 }}>
               {props.header}
             </div>
-            <div ref={postRef} style={{ zIndex: 1 }}>
+            <div
+              className={"dont-break-out"}
+              ref={postRef}
+              style={{ zIndex: 1 }}
+            >
               {props.center}
             </div>
           </motion.main>

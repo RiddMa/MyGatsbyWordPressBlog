@@ -48,7 +48,7 @@ const ThreeColumn = props => {
         >
           {props.left}
         </div>
-        <div className={"grid grid-flow-row"}>
+        <div className={"grid grid-flow-row dont-break-out"}>
           <main className={"sm:py-4 xl:py-16 sm:px-4 xl:px-8 2xl:px-12"}>
             {props.center}
           </main>

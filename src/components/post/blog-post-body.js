@@ -30,7 +30,7 @@ const BlogPostBody = ({ previous, next, post, featuredImage }) => {
   return (
     <div
       ref={postBodyRef}
-      className={"flex flex-col m-0 px-0"}
+      className={"flex flex-col m-0 px-0 "}
       style={{ paddingTop: 0 }}
     >
       <div className={"z-10"} style={{ width: "100%", height: paddingTop }}></div>
@@ -69,12 +69,6 @@ const BlogPostBody = ({ previous, next, post, featuredImage }) => {
               {parse(post.content)}
             </section>
           )}
-
-          <hr />
-
-          <footer>
-            <Bio />
-          </footer>
         </article>
 
         <nav className="blog-post-nav">

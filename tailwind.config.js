@@ -10,7 +10,13 @@ module.exports = {
     "./src/templates/**/*.{js,jsx,ts,tsx}",
   ],
   important: "#___gatsby",
-  theme: {},
+  theme: {
+    extend:{
+      rotate:{
+        fix:'0.01deg',
+      }
+    },
+  },
   variants: {
     textColor: ["group-hover"],
     extend: {

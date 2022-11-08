@@ -24,7 +24,7 @@ const BlogPostIndexEntry = props => {
   return (
     <div
       className={
-        "card flex flex-row flex-auto sm:p-6 2xl:p-8 border-none rounded-3xl drop-shadow-lg content-bg space-x-4 break-words min-w-0"
+        "card flex flex-row flex-auto sm:p-6 2xl:p-8 transition-all border-none rounded-3xl drop-shadow-xl hover:drop-shadow-2xl content-bg space-x-4"
       }
     >
       {hasImage && (
@@ -38,18 +38,13 @@ const BlogPostIndexEntry = props => {
           </Link>
         </div>
       )}
-
-      <div
-        className={
-          (hasImage ? "" : "") +
-          " card-body flex flex-col w-full break-words min-w-0"
-        }
-      >
+      {/*Note the w-full is important to keep card content full width of card*/}
+      <div className={(hasImage ? "" : "") + " card-body flex flex-col w-full"}>
         <Link className={"flex flex-col no-underline"} href={post["uri"]}>
           <Typography
             variant="h5"
             component={"span"}
-            className={"text-primary break-words min-w-0"}
+            className={"text-primary-hover-href"}
           >
             {post["title"]}
           </Typography>
@@ -66,24 +61,26 @@ const BlogPostIndexEntry = props => {
           <Typography
             variant="body1"
             component={"span"}
-            className={"text-hint break-words min-w-0"}
+            className={"text-hint"}
           >
-            分类：
-            {post.categories?.nodes?.map(item => {
-              return (
-                <span key={item.uri}>
-                  <Link className={"text-hint mr-2"} href={item.uri}>
-                    {item.name}
-                  </Link>{" "}
-                </span>
-              )
-            })}
+            <div className={"min-w-0 max-w-[700px] line-clamp-1"}>
+              分类：
+              {post.categories?.nodes?.map(item => {
+                return (
+                  <span key={item.uri}>
+                    <Link className={"text-hint mr-2"} href={item.uri}>
+                      {item.name}
+                    </Link>{" "}
+                  </span>
+                )
+              })}
+            </div>
           </Typography>
           <div className={"grow"}></div>
           <Typography
             variant="body1"
             component={"span"}
-            className={"text-hint justify-self-end"}
+            className={"text-hint whitespace-nowrap justify-self-end"}
           >
             {post["dateGmt"]}
           </Typography>
