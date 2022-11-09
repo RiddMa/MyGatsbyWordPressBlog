@@ -9,7 +9,6 @@ const MainRightPanel = props => {
     <div
       className={"flex flex-col space-y-4 m-0 p-0 max-h-screen text-secondary"}
     >
-      <DarkModeToggle></DarkModeToggle>
       <div id={"search-bar"}>
         <TextField label="搜索..." />
       </div>

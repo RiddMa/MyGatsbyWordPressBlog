@@ -5,6 +5,7 @@ import { Icon } from "@iconify/react"
 
 import GitHubIcon from "@mui/icons-material/GitHub"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+import DarkModeToggle from "./dark-mode-toggle";
 
 const MainLeftPanel = props => {
   const data = useStaticQuery(graphql`
@@ -102,6 +103,7 @@ const MainLeftPanel = props => {
             <span>相册</span>
           </div>
         </NavButton>
+        <DarkModeToggle></DarkModeToggle>
       </div>
     </div>
   )

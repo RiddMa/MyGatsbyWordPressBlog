@@ -25,11 +25,11 @@
 }
 
 .website-bg {
-    @apply bg-zinc-100 dark:bg-neutral-900
+    @apply transition-all bg-zinc-100 dark:bg-neutral-900
 }
 
 .content-bg {
-    @apply bg-white dark:bg-zinc-800
+    @apply transition-all bg-white dark:bg-zinc-800
 }
 
 /*.primary-text {*/
@@ -128,3 +128,8 @@
     hyphens: auto;
 
 }
+
+/*.card{*/
+/*    will-change: filter;*/
+/*    transition: filter .2s ease-out;*/
+/*}*/

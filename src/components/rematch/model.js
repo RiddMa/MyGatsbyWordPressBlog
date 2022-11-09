@@ -1,3 +1,5 @@
+import { breakPoints } from "../../css/theme"
+
 export const count = {
   state: 0, // initial state
   reducers: {
@@ -37,6 +39,28 @@ export const useDarkMode = {
         document.getElementById("___gatsby").classList.add("dark")
       } else {
         document.getElementById("___gatsby").classList.remove("dark")
+      }
+    },
+  }),
+}
+
+export const isDesktop = {
+  state: true,
+  reducers: {
+    setVariable(state, payload) {
+      return payload >= breakPoints.values.lg
+    },
+  },
+  effects: dispatch => ({
+    setIsDesktop(payload) {
+      dispatch.isDesktop.setVariable(payload)
+      if (payload) {
+      } else {
+      }
+    },
+    syncIsDesktop(payload, rootState) {
+      if (rootState.isDesktop) {
+      } else {
       }
     },
   }),

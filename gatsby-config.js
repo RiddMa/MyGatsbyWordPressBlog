@@ -26,10 +26,8 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         // the only required plugin option for WordPress is the GraphQL url.
-        url:
-          process.env.WPGRAPHQL_URL ||
-          `https://wpgatsbydemo.wpengine.com/graphql`,
-        // url: process.env.WPGRAPHQL_URL || `https://wp.riddma.com:7101/graphql`,
+        // url: process.env.WPGRAPHQL_URL || `https://wpgatsbydemo.wpengine.com/graphql`,
+        url: process.env.WPGRAPHQL_URL || `https://wp.riddma.com:7101/graphql`,
         html: {
           useGatsbyImage: true,
           createStaticFiles: true,
@@ -38,6 +36,16 @@ module.exports = {
         },
         schema: {
           timeout: 300000,
+          perPage: 50,
+          requestConcurrency: 8,
+        },
+        type: {
+          MediaItem: {
+            localFile: {
+              maxFileSizeBytes: 104857600,
+              requestConcurrency: 8,
+            },
+          },
         },
       },
     },

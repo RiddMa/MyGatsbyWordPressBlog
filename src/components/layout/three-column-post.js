@@ -110,20 +110,20 @@ const ThreeColumn = props => {
     >
       <div
         className={
-          "grid grid-rows-1 grid-cols-3 sm:grid-cols-[240px_auto_240px] xl:grid-cols-[256px_auto_256px] 2xl:grid-cols-[288px_auto_288px] max-w-screen-2xl mx-auto"
+          "grid grid-rows-1 grid-cols-3 transition-all sm:grid-cols-[240px_auto_240px] xl:grid-cols-[256px_auto_256px] 2xl:grid-cols-[288px_auto_288px] max-w-screen-2xl mx-auto"
         }
       >
         <div
           id={"left-column"}
           className={
-            "box-border sticky top-0 max-h-screen sm:py-4 xl:py-16 sm:ml-4 xl:ml-8 mr-0"
+            "box-border sticky top-0 max-h-screen transition-all sm:py-4 xl:py-16 sm:ml-4 xl:ml-8 mr-0"
           }
         >
           {props.left}
         </div>
         <div className={"grid grid-flow-row"}>
           <motion.main
-            className={"sm:py-4 xl:py-16 sm:px-4 xl:px-8 2xl:px-12"}
+            className={"transition-all sm:py-4 xl:py-16 sm:px-4 xl:px-8 2xl:px-12"}
             key={window.location.pathname}
             variants={variants}
             initial="initial"
@@ -145,7 +145,7 @@ const ThreeColumn = props => {
         </div>
         <div
           className={
-            "box-border sticky top-0 max-h-screen sm:py-4 xl:py-16 sm:mr-4 xl:mr-8 ml-0"
+            "box-border sticky top-0 max-h-screen transition-all sm:py-4 xl:py-16 sm:mr-4 xl:mr-8 ml-0"
           }
         >
           {props.right}

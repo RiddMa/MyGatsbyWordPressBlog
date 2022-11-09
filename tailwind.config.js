@@ -11,10 +11,13 @@ module.exports = {
   ],
   important: "#___gatsby",
   theme: {
-    extend:{
-      rotate:{
-        fix:'0.01deg',
-      }
+    transitionDuration: {
+      DEFAULT: "250ms",
+    },
+    extend: {
+      rotate: {
+        fix: "0.01deg",
+      },
     },
   },
   variants: {

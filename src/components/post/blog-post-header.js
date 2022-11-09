@@ -12,7 +12,6 @@ const BlogPostHeader = ({ post, featuredImage }) => {
 
   const calcScroll = () => {
     document.body.style.setProperty("--scroll", getScrollPercent())
-    console.log(1)
   }
 
   useEffect(() => {

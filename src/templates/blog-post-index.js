@@ -1,6 +1,8 @@
 import React, { useState } from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import _ from "lodash"
+import store from "../components/rematch/store"
+import { AnimatePresence, motion } from "framer-motion"
 
 import Bio from "../components/bio"
 import Seo from "../components/seo"
@@ -9,9 +11,6 @@ import MainLeftPanel from "../components/basic/main-left-panel"
 import BlogPostIndexEntry from "../components/basic/blog-post-index-entry"
 import MainRightPanel from "../components/basic/main-right-panel"
 import BlogPostPagination from "../components/basic/blog-post-pagination"
-
-import { AnimatePresence, motion } from "framer-motion"
-import MediaCard from "../components/basic/media-card"
 
 const BlogPostIndex = props => {
   // console.log(props)
@@ -73,7 +72,11 @@ const BlogPostList = ({
     )
   }
   return (
-    <div className={"grid grid-flow-row sm:gap-y-4 2xl:gap-y-8 break-words min-w-0"}>
+    <div
+      className={
+        "grid grid-flow-row sm:gap-y-4 2xl:gap-y-8 break-words min-w-0"
+      }
+    >
       <div className={"grid grid-flow-col justify-center"}>
         <BlogPostPagination
           currentPage={currentPage}
@@ -81,7 +84,9 @@ const BlogPostList = ({
         ></BlogPostPagination>
       </div>
       <motion.div
-        className={"grid grid-flow-row sm:gap-y-4 2xl:gap-y-8 break-words min-w-0"}
+        className={
+          "grid grid-flow-row sm:gap-y-4 2xl:gap-y-8 break-words min-w-0"
+        }
         key={`post-index-page-${path}`}
         variants={variants}
         initial="initial"
@@ -110,49 +115,102 @@ const BlogPostList = ({
 
 export default BlogPostIndex
 
-export const pageQuery = graphql`
-  query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
-    allWpPost(
-      sort: { fields: [date], order: DESC }
-      limit: $postsPerPage
-      skip: $offset
-    ) {
-      nodes {
-        uri
-        date(formatString: "YYYY-MM-DD")
-        dateGmt(formatString: "YYYY-MM-DD")
-        title
-        excerpt
-        categories {
+const getPageQuery = () => {
+  console.log(store.getState().isDesktop)
+  if (store.getState().isDesktop) {
+    return graphql`
+      query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
+        allWpPost(
+          sort: { fields: [date], order: DESC }
+          limit: $postsPerPage
+          skip: $offset
+        ) {
           nodes {
-            id
-            name
-            slug
             uri
-          }
-        }
-        featuredImage {
-          node {
-            caption
-            altText
-            description
+            date(formatString: "YYYY-MM-DD")
+            dateGmt(formatString: "YYYY-MM-DD")
             title
-            localFile {
-              childImageSharp {
-                gatsbyImageData(
-                  placeholder: BLURRED
-                  quality: 30
-                  layout: FIXED
-                  formats: AUTO
-                  transformOptions: { cropFocus: ATTENTION, fit: COVER }
-                  height: 200
-                  aspectRatio: 1
-                )
+            excerpt
+            categories {
+              nodes {
+                id
+                name
+                slug
+                uri
+              }
+            }
+            featuredImage {
+              node {
+                caption
+                altText
+                description
+                title
+                localFile {
+                  childImageSharp {
+                    gatsbyImageData(
+                      placeholder: BLURRED
+                      quality: 30
+                      layout: CONSTRAINED
+                      formats: WEBP
+                      transformOptions: { cropFocus: ATTENTION, fit: COVER }
+                      height: 300
+                      aspectRatio: 1
+                    )
+                  }
+                }
               }
             }
           }
         }
       }
-    }
+    `
+  } else {
+    return graphql`
+      query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
+        allWpPost(
+          sort: { fields: [date], order: DESC }
+          limit: $postsPerPage
+          skip: $offset
+        ) {
+          nodes {
+            uri
+            date(formatString: "YYYY-MM-DD")
+            dateGmt(formatString: "YYYY-MM-DD")
+            title
+            excerpt
+            categories {
+              nodes {
+                id
+                name
+                slug
+                uri
+              }
+            }
+            featuredImage {
+              node {
+                caption
+                altText
+                description
+                title
+                localFile {
+                  childImageSharp {
+                    gatsbyImageData(
+                      placeholder: BLURRED
+                      quality: 30
+                      layout: CONSTRAINED
+                      formats: WEBP
+                      transformOptions: { cropFocus: ATTENTION, fit: COVER }
+                      aspectRatio: 1.33
+                    )
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `
   }
-`
+}
+
+export const pageQuery = getPageQuery()

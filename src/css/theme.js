@@ -1,5 +1,16 @@
 import { createTheme } from "@mui/material/styles"
 
+export const breakPoints = {
+  values: {
+    xs: 0,
+    sm: 640,
+    md: 768,
+    lg: 1024,
+    xl: 1280,
+    "2xl": 1536,
+  },
+}
+
 export const darkTheme = createTheme({
   palette: {
     type: "dark",
@@ -116,16 +127,7 @@ export const darkTheme = createTheme({
       disableRipple: true,
     },
   },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 640,
-      md: 768,
-      lg: 1024,
-      xl: 1280,
-      "2xl": 1536,
-    },
-  },
+  breakpoints: breakPoints,
 })
 
 export const lightTheme = createTheme({
@@ -244,4 +246,5 @@ export const lightTheme = createTheme({
       disableRipple: true,
     },
   },
+  breakpoints: breakPoints,
 })
