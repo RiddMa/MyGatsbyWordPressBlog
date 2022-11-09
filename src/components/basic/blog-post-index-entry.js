@@ -10,13 +10,6 @@ const BlogPostIndexEntry = props => {
   const post = props.data
   // console.log(post)
 
-  const featuredImage = {
-    data: getImage(post.featuredImage?.node?.localFile),
-    alt: post.featuredImage?.node?.alt || ``,
-  }
-  const hasImage = !!getImage(post.featuredImage?.node?.localFile)
-  // const hasImage = !!post.featuredImage?.node?.localFile?.childImageSharp?.gatsbyImageData
-
   const customExcerpt = String(_.get(post, "excerpt")).replace(
     /\[&hellip;]<\/p>/,
     "&hellip;</p>"
@@ -25,27 +18,20 @@ const BlogPostIndexEntry = props => {
   const isDesktop = useSelector(state => state.isDesktop)
 
   if (isDesktop) {
-    return (
-      <DesktopEntryCard
-        post={post}
-        hasImage={hasImage}
-        featuredImage={featuredImage}
-        customExcerpt={customExcerpt}
-      />
-    )
+    return <DesktopEntryCard post={post} customExcerpt={customExcerpt} />
   } else {
-    return (
-      <MobileEntryCard
-        post={post}
-        hasImage={hasImage}
-        featuredImage={featuredImage}
-        customExcerpt={customExcerpt}
-      />
-    )
+    return <MobileEntryCard post={post} customExcerpt={customExcerpt} />
   }
 }
 
-const DesktopEntryCard = ({ post, featuredImage, hasImage, customExcerpt }) => {
+const DesktopEntryCard = ({ post, customExcerpt }) => {
+  const featuredImage = {
+    data: getImage(
+      post.featuredImage?.node?.localFile?.childImageSharp?.desktop
+    ),
+    alt: post.featuredImage?.node?.alt || ``,
+  }
+  const hasImage = !!post.featuredImage
   return (
     <div
       className={
@@ -115,11 +101,18 @@ const DesktopEntryCard = ({ post, featuredImage, hasImage, customExcerpt }) => {
   )
 }
 
-const MobileEntryCard = ({ post, featuredImage, hasImage, customExcerpt }) => {
+const MobileEntryCard = ({ post, customExcerpt }) => {
+  const featuredImage = {
+    data: getImage(
+      post.featuredImage?.node?.localFile?.childImageSharp?.mobile
+    ),
+    alt: post.featuredImage?.node?.alt || ``,
+  }
+  const hasImage = !!post.featuredImage
   return (
     <div
       className={
-        "card flex flex-col p-6 transition-all border-none rounded-3xl drop-shadow-xl hover:drop-shadow-2xl content-bg"
+        "card flex flex-col p-6 space-y-4 transition-all border-none rounded-3xl drop-shadow-xl hover:drop-shadow-2xl content-bg"
       }
     >
       {hasImage && (

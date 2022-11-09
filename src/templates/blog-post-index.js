@@ -165,52 +165,62 @@ const getPageQuery = () => {
       }
     `
   } else {
-    return graphql`
-      query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
-        allWpPost(
-          sort: { fields: [date], order: DESC }
-          limit: $postsPerPage
-          skip: $offset
-        ) {
+    return ""
+  }
+}
+
+export const pageQuery = graphql`
+  query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
+    allWpPost(
+      sort: { fields: [date], order: DESC }
+      limit: $postsPerPage
+      skip: $offset
+    ) {
+      nodes {
+        uri
+        date(formatString: "YYYY-MM-DD")
+        dateGmt(formatString: "YYYY-MM-DD")
+        title
+        excerpt
+        categories {
           nodes {
+            id
+            name
+            slug
             uri
-            date(formatString: "YYYY-MM-DD")
-            dateGmt(formatString: "YYYY-MM-DD")
+          }
+        }
+        featuredImage {
+          node {
+            caption
+            altText
+            description
             title
-            excerpt
-            categories {
-              nodes {
-                id
-                name
-                slug
-                uri
-              }
-            }
-            featuredImage {
-              node {
-                caption
-                altText
-                description
-                title
-                localFile {
-                  childImageSharp {
-                    gatsbyImageData(
-                      placeholder: BLURRED
-                      quality: 30
-                      layout: CONSTRAINED
-                      formats: WEBP
-                      transformOptions: { cropFocus: ATTENTION, fit: COVER }
-                      aspectRatio: 1.33
-                    )
-                  }
-                }
+            localFile {
+              childImageSharp {
+                desktop: gatsbyImageData(
+                  placeholder: BLURRED
+                  quality: 20
+                  layout: CONSTRAINED
+                  formats: WEBP
+                  transformOptions: { cropFocus: ATTENTION, fit: COVER }
+                  height: 300
+                  aspectRatio: 1
+                )
+                mobile: gatsbyImageData(
+                  placeholder: BLURRED
+                  quality: 30
+                  layout: CONSTRAINED
+                  formats: WEBP
+                  transformOptions: { cropFocus: ATTENTION, fit: COVER }
+                  height: 600
+                  aspectRatio: 1.5
+                )
               }
             }
           }
         }
       }
-    `
+    }
   }
-}
-
-export const pageQuery = getPageQuery()
+`
