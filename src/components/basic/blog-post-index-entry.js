@@ -10,10 +10,16 @@ const BlogPostIndexEntry = props => {
   const post = props.data
   // console.log(post)
 
+  // const customExcerpt = String(_.get(post, "excerpt")).replace(
+  //   /\[&hellip;]<\/p>/,
+  //   "&hellip;</p>"
+  // )
   const customExcerpt = String(_.get(post, "excerpt")).replace(
-    /\[&hellip;]<\/p>/,
-    "&hellip;</p>"
+    /\n<p class="read-more">.+<\/p>/,
+    ""
   )
+
+  console.log(customExcerpt)
 
   const isDesktop = useSelector(state => state.isDesktop)
 
@@ -44,7 +50,7 @@ const DesktopEntryCard = ({ post, customExcerpt }) => {
             <GatsbyImage
               image={featuredImage.data}
               alt={featuredImage.alt}
-              className={"rounded-2xl"}
+              className={"rounded-2xl min-h-full"}
             />
           </Link>
         </div>
@@ -134,16 +140,17 @@ const MobileEntryCard = ({ post, customExcerpt }) => {
             component={"span"}
             className={"text-primary-hover-href"}
           >
-            {post["title"]}
-          </Typography>
-          <Typography
-            variant="body1"
-            component={"span"}
-            className={"text-secondary line-clamp-3"}
-          >
-            {parse(customExcerpt)}
+            {parse(post["title"])}
           </Typography>
         </Link>
+        <Typography
+          variant="body1"
+          component={"span"}
+          className={"text-secondary line-clamp-3"}
+        >
+          {parse(customExcerpt)}
+        </Typography>
+
         <div className={"grow"}></div>
         <div className={"flex flex-row"}>
           <Typography

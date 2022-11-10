@@ -18,7 +18,7 @@ const Category = props => {
 
 const CategoryList = props => {
   const data = useStaticQuery(graphql`
-    query MyQuery {
+    query {
       allWpMediaItem(filter: { title: { regex: "/splash_category_.*/" } }) {
         totalCount
         nodes {
@@ -29,6 +29,7 @@ const CategoryList = props => {
       }
     }
   `)
+  console.log(data)
   return (
     <>
       <div></div>

@@ -85,7 +85,7 @@ const BlogPostList = ({
       </div>
       <motion.div
         className={
-          "grid grid-flow-row sm:gap-y-4 2xl:gap-y-8 break-words min-w-0"
+          "grid grid-flow-row sm:gap-y-6 2xl:gap-y-8 my-4 break-words min-w-0"
         }
         key={`post-index-page-${path}`}
         variants={variants}
@@ -98,7 +98,7 @@ const BlogPostList = ({
             <BlogPostIndexEntry
               key={item["uri"]}
               data={item}
-              className={"mb-4 flex-auto"}
+              className={"flex-auto"}
             ></BlogPostIndexEntry>
           )
         })}
@@ -115,62 +115,8 @@ const BlogPostList = ({
 
 export default BlogPostIndex
 
-const getPageQuery = () => {
-  console.log(store.getState().isDesktop)
-  if (store.getState().isDesktop) {
-    return graphql`
-      query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
-        allWpPost(
-          sort: { fields: [date], order: DESC }
-          limit: $postsPerPage
-          skip: $offset
-        ) {
-          nodes {
-            uri
-            date(formatString: "YYYY-MM-DD")
-            dateGmt(formatString: "YYYY-MM-DD")
-            title
-            excerpt
-            categories {
-              nodes {
-                id
-                name
-                slug
-                uri
-              }
-            }
-            featuredImage {
-              node {
-                caption
-                altText
-                description
-                title
-                localFile {
-                  childImageSharp {
-                    gatsbyImageData(
-                      placeholder: BLURRED
-                      quality: 30
-                      layout: CONSTRAINED
-                      formats: WEBP
-                      transformOptions: { cropFocus: ATTENTION, fit: COVER }
-                      height: 300
-                      aspectRatio: 1
-                    )
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    `
-  } else {
-    return ""
-  }
-}
-
 export const pageQuery = graphql`
-  query WordPressPostArchive($offset: Int!, $postsPerPage: Int!) {
+  query ($offset: Int!, $postsPerPage: Int!) {
     allWpPost(
       sort: { fields: [date], order: DESC }
       limit: $postsPerPage

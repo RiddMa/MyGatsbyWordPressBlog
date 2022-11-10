@@ -3,13 +3,12 @@ import { graphql, useStaticQuery } from "gatsby"
 import { Link, Typography } from "@mui/material"
 import _ from "lodash"
 import { Scrollbars } from "react-custom-scrollbars-2"
-import { Icon } from '@iconify/react';
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-
+import { Icon } from "@iconify/react"
+import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 
 const CategoryDisplay = props => {
   const data = useStaticQuery(graphql`
-    query CategoryQuery {
+    query {
       allWpCategory {
         nodes {
           name
@@ -39,8 +38,15 @@ const CategoryDisplay = props => {
 
   return (
     <div className={"grid grid-flow-row"}>
-      <Link href={'/blog/category'} className={"group my-0 ml-0 mr-auto p-0 no-underline"}>
-        <div className={"flex flex-row items-center m-0 p-0 text-secondary-hover-href"}>
+      <Link
+        href={"/blog/category"}
+        className={"group my-0 ml-0 mr-auto p-0 no-underline"}
+      >
+        <div
+          className={
+            "flex flex-row items-center m-0 p-0 text-secondary-hover-href"
+          }
+        >
           <Icon icon="bx:category" width="24" height="24" rotate={3} />
           <Typography className={"text-secondary-hover-href"}>分类</Typography>
           <ChevronRightIcon

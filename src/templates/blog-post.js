@@ -50,7 +50,7 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
 export default BlogPostTemplate
 
 export const pageQuery = graphql`
-  query BlogPostById(
+  query (
     $id: String!
     $previousPostId: String
     $nextPostId: String

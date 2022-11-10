@@ -9,7 +9,7 @@ import { Icon } from "@iconify/react";
 
 const CategoryDisplay = props => {
   const data = useStaticQuery(graphql`
-    query TagQuery {
+    query {
       allWpTag {
         totalCount
         nodes {
