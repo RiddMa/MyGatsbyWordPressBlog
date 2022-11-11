@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react"
 
 import GitHubIcon from "@mui/icons-material/GitHub"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
-import DarkModeToggle from "./dark-mode-toggle";
+import DarkModeToggle from "./dark-mode-toggle"
 
 const MainLeftPanel = props => {
   const data = useStaticQuery(graphql`
@@ -84,7 +84,7 @@ const MainLeftPanel = props => {
           <GitHubIcon className={"text-primary"}></GitHubIcon>
         </Link>
       </div>
-      <div className={"flex flex-col sm:gap-y-2 lg:gap-y-4"}>
+      <div className={"flex flex-col transition-all sm:gap-y-2 lg:gap-y-4"}>
         <NavButton href={"/"}>
           <div className={"grid grid-flow-col items-center gap-x-2"}>
             <Icon icon="bx:home" className={"w-6 h-full"} />

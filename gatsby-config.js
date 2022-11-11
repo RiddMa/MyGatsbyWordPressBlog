@@ -36,14 +36,14 @@ module.exports = {
         },
         schema: {
           timeout: 300000,
-          perPage: 50,
-          requestConcurrency: 8,
+          perPage: 25,
+          requestConcurrency: 4,
         },
         type: {
           MediaItem: {
             localFile: {
               maxFileSizeBytes: 104857600,
-              requestConcurrency: 8,
+              requestConcurrency: 4,
             },
           },
         },

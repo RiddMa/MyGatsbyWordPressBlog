@@ -19,7 +19,7 @@ const BlogPostIndexEntry = props => {
     ""
   )
 
-  console.log(customExcerpt)
+  // console.log(customExcerpt)
 
   const isDesktop = useSelector(state => state.isDesktop)
 

@@ -151,7 +151,7 @@ export const pageQuery = graphql`
                   formats: WEBP
                   transformOptions: { cropFocus: ATTENTION, fit: COVER }
                   height: 300
-                  aspectRatio: 1
+                  aspectRatio: 1.33
                 )
                 mobile: gatsbyImageData(
                   placeholder: BLURRED
