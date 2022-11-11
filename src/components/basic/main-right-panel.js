@@ -7,7 +7,7 @@ import TagDisplay from "./tag-display"
 const MainRightPanel = props => {
   return (
     <div
-      className={"flex flex-col space-y-4 m-0 p-0 max-h-screen text-secondary"}
+      className={"flex flex-col transition-all sm:space-y-4 lg:space-y-8 m-0 p-0 max-h-screen text-secondary"}
     >
       <div id={"search-bar"}>
         <TextField label="搜索..." />

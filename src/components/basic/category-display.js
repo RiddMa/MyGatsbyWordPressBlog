@@ -5,6 +5,10 @@ import _ from "lodash"
 import { Scrollbars } from "react-custom-scrollbars-2"
 import { Icon } from "@iconify/react"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
+import {
+  categoryLayoutOrder,
+  categoryWidgetOrderUseCount,
+} from "../../../blog-config"
 
 const CategoryDisplay = props => {
   const data = useStaticQuery(graphql`
@@ -32,12 +36,21 @@ const CategoryDisplay = props => {
       categoryArray[index].count = 0
     }
   })
-  categoryArray.sort((a, b) => {
-    return b.count - a.count
-  })
+  if (categoryWidgetOrderUseCount) {
+    categoryArray.sort((a, b) => {
+      return b.count - a.count
+    })
+  } else {
+    categoryArray.sort((a, b) => {
+      return (
+        categoryLayoutOrder.indexOf(a["slug"]) -
+        categoryLayoutOrder.indexOf(b["slug"])
+      )
+    })
+  }
 
   return (
-    <div className={"grid grid-flow-row"}>
+    <div className={"grid grid-flow-row m-0 p-0 gap-y-2"}>
       <Link
         href={"/blog/category"}
         className={"group my-0 ml-0 mr-auto p-0 no-underline"}
@@ -60,7 +73,7 @@ const CategoryDisplay = props => {
       <Scrollbars
         autoHeight
         autoHeightMin={0}
-        autoHeightMax={192}
+        autoHeightMax={200}
         autoHide
         autoHideTimeout={1000}
         autoHideDuration={200}

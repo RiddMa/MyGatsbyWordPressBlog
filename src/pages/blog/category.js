@@ -111,7 +111,7 @@ const CategoryList = props => {
     <>
       <div
         className={
-          "grid grid-flow-row sm:gap-y-6 2xl:gap-y-8 my-4 break-words min-w-0"
+          "grid grid-flow-row sm:gap-y-6 2xl:gap-y-8 break-words min-w-0"
         }
         key={`category-index-${path}`}
       >

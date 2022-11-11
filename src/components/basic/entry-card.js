@@ -19,8 +19,6 @@ const EntryCard = props => {
   } = props.data
   const { showPostCount, showPublishDate, showCategories } = props
 
-  console.log(props)
-
   return (
     <>
       <div

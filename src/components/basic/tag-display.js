@@ -37,7 +37,7 @@ const CategoryDisplay = props => {
   })
 
   return (
-    <div className={"grid grid-flow-row m-0 p-0"}>
+    <div className={"grid grid-flow-row m-0 p-0 gap-y-2"}>
       <Link href={'/blog/tag'} className={"group my-0 ml-0 mr-auto p-0 no-underline"}>
         <div className={"flex flex-row items-center m-0 p-0 text-secondary-hover-href"}>
           <Icon icon="system-uicons:tags" rotate={3} className={"w-6 h-6"}/>
@@ -53,7 +53,7 @@ const CategoryDisplay = props => {
       <Scrollbars
         autoHeight
         autoHeightMin={0}
-        autoHeightMax={192}
+        autoHeightMax={200}
         autoHide
         autoHideTimeout={1000}
         autoHideDuration={200}
