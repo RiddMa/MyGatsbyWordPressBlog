@@ -19,3 +19,10 @@ export const tagLayoutOrder = []
 // Use post count to sort tags in right panel widget,
 // if false then use tagLayoutOrder
 export const tagWidgetOrderUseCount = true
+
+// TODO: Add custom uri prefix support
+// normally uri for category archive is "/category/", and for category post archive is "/category/<categoryName>/",
+// here you can configure prefix added to uris, e.g. "/blog/category/"
+export const blogPostUriPrefix = "/blog"
+export const categoryUriPrefix = "/blog"
+export const tagUriPrefix = "/blog"

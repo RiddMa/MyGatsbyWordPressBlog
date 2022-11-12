@@ -1,9 +1,10 @@
 const path = require(`path`)
 const chunk = require(`lodash/chunk`)
+const _ = require("lodash")
 
 // This is a simple debugging tool
 // dd() will prettily dump to the terminal and kill the process
-// const { dd } = require(`dumper.js`)
+const { dd } = require(`dumper.js`)
 
 /**
  * exports.createPages is a built-in Gatsby Node API.
@@ -25,6 +26,8 @@ exports.createPages = async gatsbyUtilities => {
 
   // And a paginated archive
   await createBlogPostArchive({ posts, gatsbyUtilities })
+
+  await createBlogPostArchiveByCategory({ posts, gatsbyUtilities })
 
   // const PageTemplate = path.resolve("./src/templates/Page.js")
   // gatsbyUtilities.actions.createPage({
@@ -67,11 +70,11 @@ const createIndividualBlogPostPages = async ({ posts, gatsbyUtilities }) =>
   )
 
 /**
- * This function creates all the individual blog pages in this site
+ * This function creates blog page archive sorted by date in this site
  */
 async function createBlogPostArchive({ posts, gatsbyUtilities }) {
-  const graphqlResult = await gatsbyUtilities.graphql(/* GraphQL */ `
-    {
+  const graphqlResult = await gatsbyUtilities.graphql(`
+    query {
       wp {
         readingSettings {
           postsPerPage
@@ -80,7 +83,11 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
     }
   `)
 
-  const { postsPerPage } = graphqlResult.data.wp.readingSettings
+  const postsPerPage = _.get(
+    graphqlResult,
+    "data.wp.readingSettings.postsPerPage",
+    10
+  )
 
   const postsChunkedIntoArchivePages = chunk(posts, postsPerPage)
   const totalPages = postsChunkedIntoArchivePages.length
@@ -101,13 +108,17 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
         }
         return null
       }
+      const pageUris = ["don't use pageNumber 0"]
+      for (let i = 0; i < totalPages; i++) {
+        pageUris.push(getPagePath(i + 1))
+      }
 
       // createPage is an action passed to createPages
       // See https://www.gatsbyjs.com/docs/actions#createPage for more info
       await gatsbyUtilities.actions.createPage({
         path: getPagePath(pageNumber),
         // use the blog post archive template as the page component
-        component: path.resolve(`./src/templates/blog-post-index.js`),
+        component: path.resolve(`./src/templates/blog-post-archive.js`),
         // `context` is available in the template as a prop and
         // as a variable in GraphQL.
         context: {
@@ -115,13 +126,115 @@ async function createBlogPostArchive({ posts, gatsbyUtilities }) {
           // so for page 1, 0 * 10 = 0 offset, for page 2, 1 * 10 = 10 posts offset,
           // etc
           offset: index * postsPerPage,
-          // We need to tell the template how many posts to display too
           postsPerPage,
+          // We need to tell the template how many posts to display too.
           currentPage: pageNumber,
           totalPages,
-          nextPagePath: getPagePath(pageNumber + 1),
-          previousPagePath: getPagePath(pageNumber - 1),
+          pageUris,
         },
+      })
+    })
+  )
+}
+
+/**
+ * This function creates blog page archive grouped by category and sorted by date
+ */
+async function createBlogPostArchiveByCategory({ posts, gatsbyUtilities }) {
+  let graphqlResult = await gatsbyUtilities.graphql(`
+    query {
+      wp {
+        readingSettings {
+          postsPerPage
+        }
+      }
+      allWpCategory {
+        nodes {
+          id
+          slug
+        }
+      }
+    }
+  `)
+
+  graphqlResult = JSON.parse(JSON.stringify(graphqlResult))
+
+  const postsPerPage = _.get(
+    graphqlResult,
+    "data.wp.readingSettings.postsPerPage",
+    10
+  )
+
+  const categoryArray = _.get(graphqlResult, "data.allWpCategory.nodes", [])
+
+  const postChunksByCategory = []
+  for (const category of categoryArray) {
+    let byCategoryQueryResult = await gatsbyUtilities.graphql(`
+      query {
+        allWpPost(
+          sort: {fields: [date], order: DESC}
+          filter: {categories: {nodes: {elemMatch: {id: {eq: "${category.id}"}}}}}
+        ) {
+          nodes {
+            id
+            title
+            uri
+          }
+        }
+      }
+    `)
+    byCategoryQueryResult = _.get(
+      JSON.parse(JSON.stringify(byCategoryQueryResult)),
+      "data.allWpPost.nodes",
+      []
+    )
+    byCategoryQueryResult = chunk(byCategoryQueryResult, postsPerPage)
+    postChunksByCategory.push({
+      categorySlug: category.slug,
+      postChunk: byCategoryQueryResult,
+    })
+  }
+
+  return Promise.all(
+    // Loop through all categories
+    postChunksByCategory.map(async (categoryChunksData, categoryIndex) => {
+      const totalPages = categoryChunksData.postChunk.length
+
+      // Helper function to get path uri,
+      // "/blog/category/<categoryName>/" if pageNumber==1 or "/blog/category/<categoryName>/<pageNumber>" if pageNumber>1
+      const getPagePath = page => {
+        if (page > 0 && page <= totalPages) {
+          return page === 1
+            ? `/blog/category/${categoryChunksData.categorySlug}/`
+            : `/blog/category/${categoryChunksData.categorySlug}/${page}`
+        }
+        return null
+      }
+      // pageUris for each pageNumber,
+      // structure=["don't use pageNumber 0",
+      //            "/blog/category/<categoryName>/",
+      //            "/blog/category/<categoryName>/2",
+      //            ...]
+      const pageUris = ["don't use pageNumber 0"]
+      for (let i = 0; i < totalPages; i++) {
+        pageUris.push(getPagePath(i + 1))
+      }
+
+      // Finally create individual archive pages for given category
+      categoryChunksData.postChunk.map(async (categoryPageData, pageIndex) => {
+        // console.log(categoryPageData, pageIndex)
+        const pageNumber = pageIndex + 1
+
+        await gatsbyUtilities.actions.createPage({
+          path: getPagePath(pageNumber),
+          component: path.resolve(`./src/templates/blog-post-archive-v2.js`),
+          context: {
+            currentPage: pageNumber,
+            totalPages,
+            pageUris,
+            pageData: categoryPageData,
+          },
+        })
       })
     })
   )

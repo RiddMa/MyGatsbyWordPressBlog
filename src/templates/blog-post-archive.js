@@ -12,16 +12,10 @@ import BlogPostIndexEntry from "../components/basic/blog-post-index-entry"
 import MainRightPanel from "../components/basic/main-right-panel"
 import BlogPostPagination from "../components/basic/blog-post-pagination"
 
-const BlogPostIndex = props => {
+const BlogPostArchive = props => {
   // console.log(props)
   const posts = _.get(props, "data.allWpPost.nodes")
-  const {
-    nextPagePath,
-    previousPagePath,
-    postsPerPage,
-    currentPage,
-    totalPages,
-  } = _.get(props, "pageContext")
+  const { currentPage, totalPages, pageUris } = _.get(props, "pageContext")
 
   return (
     <ThreeColumn
@@ -32,6 +26,7 @@ const BlogPostIndex = props => {
           pageContext={{
             currentPage,
             totalPages,
+            pageUris,
           }}
         />
       }
@@ -42,7 +37,7 @@ const BlogPostIndex = props => {
 
 const BlogPostList = ({
   posts,
-  pageContext: { currentPage, totalPages },
+  pageContext: { currentPage, totalPages, pageUris },
   path,
 }) => {
   const duration = 0.25
@@ -74,13 +69,14 @@ const BlogPostList = ({
   return (
     <div
       className={
-        "grid grid-flow-row sm:gap-y-4 2xl:gap-y-8 break-words min-w-0"
+        "grid grid-flow-row transition-all sm:gap-y-4 2xl:gap-y-8 break-words min-w-0"
       }
     >
       <div className={"grid grid-flow-col justify-center"}>
         <BlogPostPagination
           currentPage={currentPage}
           totalPages={totalPages}
+          pageUris={pageUris}
         ></BlogPostPagination>
       </div>
       <motion.div
@@ -107,13 +103,14 @@ const BlogPostList = ({
         <BlogPostPagination
           currentPage={currentPage}
           totalPages={totalPages}
+          pageUris={pageUris}
         ></BlogPostPagination>
       </div>
     </div>
   )
 }
 
-export default BlogPostIndex
+export default BlogPostArchive
 
 export const pageQuery = graphql`
   query ($offset: Int!, $postsPerPage: Int!) {

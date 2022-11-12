@@ -7,7 +7,7 @@ import parse from "html-react-parser"
 import _ from "lodash"
 
 const EntryCard = props => {
-  const {
+  let {
     title,
     description,
     slug,
@@ -19,18 +19,20 @@ const EntryCard = props => {
   } = props.data
   const { showPostCount, showPublishDate, showCategories } = props
 
+  description = description || "该分类暂无描述。"
+
   return (
     <>
       <div
         className={
-          "card flex sm:flex-col sm:space-y-4 lg:space-y-0 lg:flex-row sm:space-x-0 lg:space-x-4 sm:p-6 2xl:p-8 transition-all border-none rounded-3xl drop-shadow-xl hover:drop-shadow-2xl content-bg "
+          "card flex sm:flex-col sm:space-y-4 lg:space-y-0 lg:flex-row sm:space-x-2 lg:space-x-6 sm:p-6 2xl:p-8 transition-all border-none rounded-3xl drop-shadow-xl hover:drop-shadow-2xl content-bg "
         }
       >
         <CardHeader featuredImage={featuredImage} uri={uri}></CardHeader>
         {/*Note the w-full is important to keep card content full width of card*/}
         <div
           className={
-            "card-body flex flex-col w-full space-y-2 min-w-[300px] sm:min-h-[100px] lg:min-h-[200px]"
+            "card-body flex flex-col w-full space-y-4 min-w-[300px] sm:min-h-[100px] lg:min-h-[200px]"
           }
         >
           <Link className={"flex flex-col no-underline"} href={uri}>
@@ -63,15 +65,16 @@ const EntryCard = props => {
 }
 
 const CardHeader = ({ featuredImage, uri }) => {
+  // React Hooks cannot be called conditionally
   const isDesktop = useSelector(state => state.isDesktop)
-  let image,
-    { alt, caption } = featuredImage
-  if (isDesktop) {
-    image = _.get(featuredImage, "childImageSharp.desktop", null)
-  } else {
-    image = _.get(featuredImage, "childImageSharp.mobile", null)
-  }
   if (!!featuredImage) {
+    let image,
+      { alt, caption } = featuredImage
+    if (isDesktop) {
+      image = _.get(featuredImage, "childImageSharp.desktop", null)
+    } else {
+      image = _.get(featuredImage, "childImageSharp.mobile", null)
+    }
     return (
       <div className="card-header">
         <Link className={"no-underline"} href={uri}>

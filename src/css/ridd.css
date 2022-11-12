@@ -129,7 +129,10 @@
 
 }
 
-/*.card{*/
-/*    will-change: filter;*/
-/*    transition: filter .2s ease-out;*/
-/*}*/
+.card {
+    @apply flex sm:flex-col sm:space-y-4 lg:space-y-0 lg:flex-row sm:space-x-0 lg:space-x-4 sm:p-6 2xl:p-8 transition-all border-none rounded-3xl drop-shadow-xl hover:drop-shadow-2xl content-bg
+}
+
+.card-body {
+    @apply flex flex-col w-full space-y-2 min-w-[300px] sm:min-h-[100px] lg:min-h-[200px]
+}

@@ -103,6 +103,12 @@ const MainLeftPanel = props => {
             <span>相册</span>
           </div>
         </NavButton>
+        <NavButton href={"/about"}>
+          <div className={"grid grid-flow-col items-center gap-x-2"}>
+            <Icon icon="bi:info-circle" className={"w-6 h-full"} />
+            <span>关于</span>
+          </div>
+        </NavButton>
         <DarkModeToggle></DarkModeToggle>
       </div>
     </div>

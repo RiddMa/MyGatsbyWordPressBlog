@@ -1,6 +1,5 @@
 import React from "react"
 import { TextField } from "@mui/material"
-import DarkModeToggle from "./dark-mode-toggle"
 import CategoryDisplay from "./category-display"
 import TagDisplay from "./tag-display"
 

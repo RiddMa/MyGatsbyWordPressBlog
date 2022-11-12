@@ -60,17 +60,17 @@ export const pageQuery = graphql`
       excerpt
       content
       title
-      date(formatString: "YYYY-MM-DD")
+      dateGmt(formatString: "YYYY-MM-DD")
       featuredImage {
         node {
           altText
           localFile {
             childImageSharp {
               gatsbyImageData(
-                quality: 100
+                quality: 50
                 placeholder: BLURRED
                 layout: FULL_WIDTH
-                formats: AUTO
+                formats: WEBP
               )
             }
           }

@@ -17,10 +17,8 @@ import "../../css/@wordpress/block-library/build-style/theme.css"
 
 const BlogPostBody = ({ previous, next, post, featuredImage }) => {
   // 计算正确的封面图高度
-  const [
-    postBodyRef,
-    { width: postBodyWidth, height: postBodyHeight },
-  ] = useElementSize()
+  const [postBodyRef, { width: postBodyWidth, height: postBodyHeight }] =
+    useElementSize()
   const imgWidth = _.get(featuredImage, "data.width", 0)
   const imgHeight = _.get(featuredImage, "data.height", 0)
   let paddingTop = imgWidth
@@ -33,7 +31,10 @@ const BlogPostBody = ({ previous, next, post, featuredImage }) => {
       className={"flex flex-col m-0 px-0 "}
       style={{ paddingTop: 0 }}
     >
-      <div className={"z-10"} style={{ width: "100%", height: paddingTop }}></div>
+      <div
+        className={"z-10"}
+        style={{ width: "100%", height: paddingTop }}
+      ></div>
       <div
         className={
           "card flex flex-col m-0 p-8 border-none rounded-3xl drop-shadow-lg content-bg"
@@ -47,7 +48,7 @@ const BlogPostBody = ({ previous, next, post, featuredImage }) => {
         >
           <header>
             <Typography
-              variant="h3"
+              variant={"h3"}
               component={"h1"}
               itemProp="headline"
               className={"text-primary"}
