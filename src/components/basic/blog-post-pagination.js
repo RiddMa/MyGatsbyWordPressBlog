@@ -1,8 +1,8 @@
 import React from "react"
-import { Pagination, PaginationItem } from "@mui/material"
-import { Link } from "gatsby"
+import { Pagination, PaginationItem, Link } from "@mui/material"
 
 const BlogPostPagination = ({ currentPage, totalPages, pageUris }) => {
+  // console.log(currentPage, totalPages, pageUris)
   return (
     <Pagination
       page={currentPage}
@@ -11,7 +11,7 @@ const BlogPostPagination = ({ currentPage, totalPages, pageUris }) => {
       showLastButton
       shape={"rounded"}
       renderItem={item => (
-        <PaginationItem component={Link} to={pageUris[item.page]} {...item} />
+        <PaginationItem component={Link} href={pageUris[item.page]} {...item} />
       )}
     />
   )

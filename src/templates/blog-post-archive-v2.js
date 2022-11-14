@@ -13,44 +13,46 @@ import MainRightPanel from "../components/basic/main-right-panel"
 import BlogPostPagination from "../components/basic/blog-post-pagination"
 
 const BlogPostArchiveV2 = props => {
-  // console.log(props)
+  console.log(props)
   const posts = _.get(props, "data.allWpPost.nodes")
-  const { currentPage, totalPages, pageUris } = _.get(props, "pageContext")
+  const { currentPage, totalPages, pageUris, pageData } = _.get(
+    props,
+    "pageContext"
+  )
 
-  // return (
-  //   <ThreeColumn
-  //     left={<MainLeftPanel />}
-  //     center={
-  //       <BlogPostList
-  //         posts={posts}
-  //         pageContext={{
-  //           currentPage,
-  //           totalPages,
-  //           pageUris,
-  //         }}
-  //       />
-  //     }
-  //     right={<MainRightPanel />}
-  //   />
-  // )
   return (
     <ThreeColumn
       left={<MainLeftPanel />}
       center={
-        <>
-          <div>
-            {currentPage}_{totalPages}_{pageUris}
-          </div>
-        </>
+        <BlogPostList
+          pageContext={{
+            currentPage,
+            totalPages,
+            pageUris,
+            pageData,
+          }}
+        />
       }
       right={<MainRightPanel />}
     />
   )
+  // return (
+  //   <ThreeColumn
+  //     left={<MainLeftPanel />}
+  //     center={
+  //       <>
+  //         <div>
+  //           {currentPage}_{totalPages}_{pageUris}
+  //         </div>
+  //       </>
+  //     }
+  //     right={<MainRightPanel />}
+  //   />
+  // )
 }
 
 const BlogPostList = ({
-  posts,
-  pageContext: { currentPage, totalPages, pageUris },
+  pageContext: { currentPage, totalPages, pageUris, pageData },
   path,
 }) => {
   const duration = 0.25
@@ -67,7 +69,7 @@ const BlogPostList = ({
     exit: { opacity: 0, transition: { duration: duration } },
   }
 
-  if (!posts.length) {
+  if (!pageData.length) {
     return (
       <div>
         <Seo title="All posts" />
@@ -89,7 +91,7 @@ const BlogPostList = ({
         <BlogPostPagination
           currentPage={currentPage}
           totalPages={totalPages}
-          pagePaths={pageUris}
+          pageUris={pageUris}
         ></BlogPostPagination>
       </div>
       <motion.div
@@ -102,7 +104,7 @@ const BlogPostList = ({
         animate="animate"
         exit="exit"
       >
-        {posts.map(item => {
+        {pageData.map(item => {
           return (
             <BlogPostIndexEntry
               key={item["uri"]}
@@ -116,6 +118,7 @@ const BlogPostList = ({
         <BlogPostPagination
           currentPage={currentPage}
           totalPages={totalPages}
+          pageUris={pageUris}
         ></BlogPostPagination>
       </div>
     </div>

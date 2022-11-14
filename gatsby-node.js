@@ -179,6 +179,46 @@ async function createBlogPostArchiveByCategory({ posts, gatsbyUtilities }) {
             id
             title
             uri
+            dateGmt(formatString: "YYYY-MM-DD")
+            excerpt
+            categories {
+              nodes {
+                id
+                name
+                slug
+                uri
+              }
+            }
+            featuredImage {
+              node {
+                caption
+                altText
+                description
+                title
+                localFile {
+                  childImageSharp {
+                    desktop: gatsbyImageData(
+                      placeholder: BLURRED
+                      quality: 20
+                      layout: CONSTRAINED
+                      formats: WEBP
+                      transformOptions: {cropFocus: ATTENTION, fit: COVER}
+                      height: 300
+                      aspectRatio: 1.33
+                    )
+                    mobile: gatsbyImageData(
+                      placeholder: BLURRED
+                      quality: 30
+                      layout: CONSTRAINED
+                      formats: WEBP
+                      transformOptions: {cropFocus: ATTENTION, fit: COVER}
+                      height: 600
+                      aspectRatio: 1.5
+                    )
+                  }
+                }
+              }
+            }
           }
         }
       }
