@@ -47,14 +47,13 @@ const MainLeftPanel = props => {
   const siteDesc = generalSettings["description"]
 
   return (
-    <div className={"flex flex-col space-y-4 m-0 p-0 max-h-screen"}>
+    <div className={"flex flex-col space-y-4 m-0 p-0 max-h-screen justify-center"}>
       <Avatar
-        className={"avatar"}
+        className={"avatar w-[150px] h-[150px] mx-auto"}
         alt={username}
         src={avatar}
-        sx={{ width: 150, height: 150 }}
       ></Avatar>
-      <Link href={"/"} className={"title no-underline group"}>
+      <Link href={"/"} className={"title no-underline group mx-auto"}>
         <Typography
           variant={"h5"}
           component={"h1"}
@@ -64,7 +63,7 @@ const MainLeftPanel = props => {
           {siteTitle}
         </Typography>
       </Link>
-      <div className={"slogan"}>
+      <div className={"slogan  mx-auto"}>
         <Typography
           variant={"body1"}
           component={"span"}
@@ -74,7 +73,7 @@ const MainLeftPanel = props => {
           {siteDesc}
         </Typography>
       </div>
-      <div className={"flex flex-row"}>
+      <div className={"flex flex-row  mx-auto"}>
         <Link
           href={"https://github.com/RiddMa"}
           target="_blank"

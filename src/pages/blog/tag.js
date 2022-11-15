@@ -19,6 +19,16 @@ const Tag = props => {
 const TagList = props => {
   const data = useStaticQuery(graphql`
     query {
+      allWpCategory {
+        nodes {
+          description
+          title: name
+          uri
+          slug
+          id
+          count
+        }
+      }
       allWpMediaItem(filter: { title: { regex: "/splash_tag_.*/" } }) {
         totalCount
         nodes {

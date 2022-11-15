@@ -5,6 +5,9 @@
  * https://www.gatsbyjs.com/docs/gatsby-config/
  *
  */
+require("dotenv").config({
+  path: `.env`,
+})
 
 module.exports = {
   /**
@@ -28,6 +31,12 @@ module.exports = {
         // the only required plugin option for WordPress is the GraphQL url.
         // url: process.env.WPGRAPHQL_URL || `https://wpgatsbydemo.wpengine.com/graphql`,
         url: process.env.WPGRAPHQL_URL || `https://wp.riddma.com:7101/graphql`,
+        auth: {
+          htaccess: {
+            username: process.env.WP_USERNAME,
+            password: process.env.WP_PASSWORD,
+          },
+        },
         html: {
           useGatsbyImage: true,
           createStaticFiles: true,

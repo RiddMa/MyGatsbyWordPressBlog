@@ -29,6 +29,8 @@ exports.createPages = async gatsbyUtilities => {
 
   await createBlogPostArchiveByCategory({ posts, gatsbyUtilities })
 
+  await createBlogPostArchiveByTag({ posts, gatsbyUtilities })
+
   // const PageTemplate = path.resolve("./src/templates/Page.js")
   // gatsbyUtilities.actions.createPage({
   //   path: "/test",
@@ -180,12 +182,19 @@ async function createBlogPostArchiveByCategory({ posts, gatsbyUtilities }) {
             title
             uri
             dateGmt(formatString: "YYYY-MM-DD")
+            modifiedGmt(formatString: "YYYY-MM-DD")
             excerpt
             categories {
               nodes {
                 id
                 name
-                slug
+                uri
+              }
+            }
+            tags {
+              nodes {
+                id
+                name
                 uri
               }
             }
@@ -228,6 +237,13 @@ async function createBlogPostArchiveByCategory({ posts, gatsbyUtilities }) {
       "data.allWpPost.nodes",
       []
     )
+    for (let i = 0; i < byCategoryQueryResult.length; i++) {
+      byCategoryQueryResult[i].featuredImage = _.get(
+        byCategoryQueryResult[i].featuredImage,
+        "node",
+        null
+      )
+    }
     byCategoryQueryResult = chunk(byCategoryQueryResult, postsPerPage)
     postChunksByCategory.push({
       categorySlug: category.slug,
@@ -238,15 +254,19 @@ async function createBlogPostArchiveByCategory({ posts, gatsbyUtilities }) {
   return Promise.all(
     // Loop through all categories
     postChunksByCategory.map(async (categoryChunksData, categoryIndex) => {
-      const totalPages = categoryChunksData.postChunk.length
+      const totalPages = categoryChunksData.postChunk.length || 1
 
       // Helper function to get path uri,
       // "/blog/category/<categoryName>/" if pageNumber==1 or "/blog/category/<categoryName>/<pageNumber>" if pageNumber>1
       const getPagePath = page => {
         if (page > 0 && page <= totalPages) {
           return page === 1
-            ? `/blog/category/${categoryChunksData.categorySlug}/`
-            : `/blog/category/${categoryChunksData.categorySlug}/${page}`
+            ? decodeURIComponent(
+                `/blog/category/${categoryChunksData.categorySlug}/`
+              )
+            : decodeURIComponent(
+                `/blog/category/${categoryChunksData.categorySlug}/${page}`
+              )
         }
         return null
       }
@@ -258,6 +278,20 @@ async function createBlogPostArchiveByCategory({ posts, gatsbyUtilities }) {
       const pageUris = ["don't use pageNumber 0"]
       for (let i = 0; i < totalPages; i++) {
         pageUris.push(getPagePath(i + 1))
+      }
+
+      if (categoryChunksData.postChunk.length === 0) {
+        await gatsbyUtilities.actions.createPage({
+          path: getPagePath(1),
+          component: path.resolve(`./src/templates/blog-post-archive-v2.js`),
+          context: {
+            currentPage: 1,
+            totalPages,
+            pageUris,
+            pageData: [],
+            cardType: "post",
+          },
+        })
       }
 
       // Finally create individual archive pages for given category
@@ -273,6 +307,167 @@ async function createBlogPostArchiveByCategory({ posts, gatsbyUtilities }) {
             totalPages,
             pageUris,
             pageData: categoryPageData,
+            cardType: "post",
+          },
+        })
+      })
+    })
+  )
+}
+
+/**
+ * This function creates blog page archive grouped by tag and sorted by date
+ */
+async function createBlogPostArchiveByTag({ posts, gatsbyUtilities }) {
+  let graphqlResult = await gatsbyUtilities.graphql(`
+    query {
+      wp {
+        readingSettings {
+          postsPerPage
+        }
+      }
+      allWpTag {
+        nodes {
+          id
+          slug
+        }
+      }
+    }
+  `)
+
+  graphqlResult = JSON.parse(JSON.stringify(graphqlResult))
+
+  const postsPerPage = _.get(
+    graphqlResult,
+    "data.wp.readingSettings.postsPerPage",
+    10
+  )
+
+  const tagArray = _.get(graphqlResult, "data.allWpTag.nodes", [])
+
+  const postChunksByTag = []
+  for (const tag of tagArray) {
+    let byTagQueryResult = await gatsbyUtilities.graphql(`
+      query {
+        allWpPost(
+          sort: {fields: [date], order: DESC}
+          filter: {tags: {nodes: {elemMatch: {id: {eq: "${tag.id}"}}}}}
+        ) {
+          nodes {
+            id
+            title
+            uri
+            dateGmt(formatString: "YYYY-MM-DD")
+            modifiedGmt(formatString: "YYYY-MM-DD")
+            excerpt
+            categories {
+              nodes {
+                id
+                name
+                uri
+              }
+            }
+            tags {
+              nodes {
+                id
+                name
+                uri
+              }
+            }
+            featuredImage {
+              node {
+                caption
+                altText
+                description
+                title
+                localFile {
+                  childImageSharp {
+                    desktop: gatsbyImageData(
+                      placeholder: BLURRED
+                      quality: 20
+                      layout: CONSTRAINED
+                      formats: WEBP
+                      transformOptions: {cropFocus: ATTENTION, fit: COVER}
+                      height: 300
+                      aspectRatio: 1.33
+                    )
+                    mobile: gatsbyImageData(
+                      placeholder: BLURRED
+                      quality: 30
+                      layout: CONSTRAINED
+                      formats: WEBP
+                      transformOptions: {cropFocus: ATTENTION, fit: COVER}
+                      height: 600
+                      aspectRatio: 1.5
+                    )
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `)
+    byTagQueryResult = _.get(
+      JSON.parse(JSON.stringify(byTagQueryResult)),
+      "data.allWpPost.nodes",
+      []
+    )
+    for (let i = 0; i < byTagQueryResult.length; i++) {
+      byTagQueryResult[i].featuredImage = _.get(
+        byTagQueryResult[i].featuredImage,
+        "node",
+        null
+      )
+    }
+    byTagQueryResult = chunk(byTagQueryResult, postsPerPage)
+    postChunksByTag.push({
+      tagSlug: tag.slug,
+      postChunk: byTagQueryResult,
+    })
+  }
+
+  return Promise.all(
+    // Loop through all categories
+    postChunksByTag.map(async (tagChunksData, tagIndex) => {
+      const totalPages = tagChunksData.postChunk.length
+
+      // Helper function to get path uri,
+      // "/blog/category/<categoryName>/" if pageNumber==1 or "/blog/category/<categoryName>/<pageNumber>" if pageNumber>1
+      const getPagePath = page => {
+        if (page > 0 && page <= totalPages) {
+          return page === 1
+            ? decodeURIComponent(`/blog/tag/${tagChunksData.tagSlug}/`)
+            : decodeURIComponent(
+                `/blog/tag/${tagChunksData.tagSlug}/${page}`
+              )
+        }
+        return null
+      }
+      // pageUris for each pageNumber,
+      // structure=["don't use pageNumber 0",
+      //            "/blog/category/<categoryName>/",
+      //            "/blog/category/<categoryName>/2",
+      //            ...]
+      const pageUris = ["don't use pageNumber 0"]
+      for (let i = 0; i < totalPages; i++) {
+        pageUris.push(getPagePath(i + 1))
+      }
+
+      // Finally create individual archive pages for given category
+      tagChunksData.postChunk.map(async (tagPageData, pageIndex) => {
+        // console.log(categoryPageData, pageIndex)
+        const pageNumber = pageIndex + 1
+
+        await gatsbyUtilities.actions.createPage({
+          path: getPagePath(pageNumber),
+          component: path.resolve(`./src/templates/blog-post-archive-v2.js`),
+          context: {
+            currentPage: pageNumber,
+            totalPages,
+            pageUris,
+            pageData: tagPageData,
+            cardType: "post",
           },
         })
       })

@@ -66,13 +66,14 @@ const CategoryList = props => {
     }
   `)
 
+  // get category slug to featuredImage map.
   const splashMap = _.get(data, "allWpMediaItem.nodes", []).reduce(
     (acc, cur) => ({
       ...acc,
       [cur.title.split("_")[2]]: {
         caption: cur["caption"],
-        alt: cur["altText"],
-        childImageSharp: _.get(cur, "localFile.childImageSharp", {
+        altText: cur["altText"],
+        localFile: _.get(cur, "localFile", {
           desktop: null,
           mobile: null,
         }),
@@ -92,7 +93,7 @@ const CategoryList = props => {
         categoryLayoutOrder.indexOf(b["slug"])
       )
     })
-  console.log(categoryArray)
+  // console.log(categoryArray)
 
   // Structure =
   // [{description,
@@ -102,9 +103,13 @@ const CategoryList = props => {
   //   id,
   //   count,
   //   featuredImage: {caption,
-  //                   alt,
-  //                   childImageSharp:{desktop(alias for gatsbyImageData),
-  //                                    mobile(alias for gatsbyImageData)}}
+  //                   altText,
+  //                   description,
+  //                   localFile:{
+  //                              childImageSharp:{desktop(alias for gatsbyImageData),
+  //                                               mobile(alias for gatsbyImageData)}
+  //                                               }
+  //                   }
   // }]
 
   return (
@@ -120,7 +125,7 @@ const CategoryList = props => {
             <EntryCard
               key={el["id"]}
               data={el}
-              showPostCount={true}
+              type={"category"}
               className={"flex-auto"}
             ></EntryCard>
           )

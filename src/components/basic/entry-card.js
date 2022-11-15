@@ -5,21 +5,54 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Typography from "@mui/material/Typography"
 import parse from "html-react-parser"
 import _ from "lodash"
+import { defaultDescription } from "../../../blog-config"
 
 const EntryCard = props => {
+  // console.log(props)
   let {
-    title,
-    description,
-    slug,
     uri,
+    title,
+    dateGmt,
+    modifiedGmt,
+    description,
+    excerpt,
+    slug,
     featuredImage,
     categories,
+    tags,
     count,
-    date,
   } = props.data
-  const { showPostCount, showPublishDate, showCategories } = props
+  let { type, showPostCount, showPublishDate, showCategories, showTags } = props
 
-  description = description || "该分类暂无描述。"
+  // If there's no description, then use default ones set in blog-config.js,
+  // according to card type.
+
+  switch (type) {
+    case "category": {
+      showPostCount = true
+      showPublishDate = false
+      showCategories = false
+      showTags = false
+      description = description || defaultDescription[type]
+      break
+    }
+    case "tag": {
+      showPostCount = true
+      showPublishDate = false
+      showCategories = false
+      showTags = false
+      description = description || defaultDescription[type]
+      break
+    }
+    case "post": {
+      showPostCount = false
+      showPublishDate = true
+      showCategories = true
+      showTags = true
+      description = excerpt || defaultDescription[type]
+      break
+    }
+  }
 
   return (
     <>
@@ -44,19 +77,21 @@ const EntryCard = props => {
               {title}
             </Typography>
           </Link>
-          <Typography
-            variant="body1"
-            component={"span"}
-            className={"text-secondary line-clamp-3"}
-          >
-            {description}
-          </Typography>
+          <DescriptionDisplay description={description} />
           <div className={"grow"}></div>
           <div className={"flex flex-row m-0 p-0"}>
-            {showCategories && <CategoryDisplay categories={categories} />}
-            <div className={"grow"}></div>
-            {showPublishDate && <PublishDateDisplay date={date} />}
-            {showPostCount && <PostCountDisplay count={count} />}
+            <div className={"flex flex-col m-0 p-0"}>
+              {showCategories && <CategoryDisplay categories={categories} />}
+              {showTags && <TagDisplay tags={tags} />}
+            </div>
+            <div className={"grow min-w-[32px]"}></div>
+            <div className={"flex flex-col"}>
+              <div className={"grow"}></div>
+              {showPublishDate && (
+                <ModifiedDateDisplay modifiedGmt={modifiedGmt} />
+              )}
+              {showPostCount && <PostCountDisplay count={count} />}
+            </div>
           </div>
         </div>
       </div>
@@ -68,19 +103,19 @@ const CardHeader = ({ featuredImage, uri }) => {
   // React Hooks cannot be called conditionally
   const isDesktop = useSelector(state => state.isDesktop)
   if (!!featuredImage) {
-    let image,
-      { alt, caption } = featuredImage
+    let image
+    const { altText, caption, description } = featuredImage
     if (isDesktop) {
-      image = _.get(featuredImage, "childImageSharp.desktop", null)
+      image = _.get(featuredImage, "localFile.childImageSharp.desktop", null)
     } else {
-      image = _.get(featuredImage, "childImageSharp.mobile", null)
+      image = _.get(featuredImage, "localFile.childImageSharp.mobile", null)
     }
     return (
       <div className="card-header">
         <Link className={"no-underline"} href={uri}>
           <GatsbyImage
             image={image}
-            alt={alt}
+            alt={altText}
             className={"rounded-2xl min-h-full"}
           />
         </Link>
@@ -90,8 +125,27 @@ const CardHeader = ({ featuredImage, uri }) => {
     return <></>
   }
 }
+
+const DescriptionDisplay = ({ description }) => {
+  description = description
+    .replace(/\n<p class="read-more">.+<\/p>/, "")
+    .replace(/<p>/, "")
+    .replace(/<\/p>/, "")
+
+  return (
+    <Typography
+      variant="body1"
+      component={"span"}
+      className={"text-secondary line-clamp-3 m-0 p-0"}
+    >
+      {parse(description)}
+    </Typography>
+  )
+}
+
 const CategoryDisplay = ({ categories }) => {
   const isDesktop = useSelector(state => state.isDesktop)
+  categories = _.get(categories, "nodes", [])
   if (!!categories) {
     return (
       <Typography variant="body1" component={"div"} className={"text-hint"}>
@@ -110,20 +164,55 @@ const CategoryDisplay = ({ categories }) => {
       </Typography>
     )
   } else {
-    return <></>
+    return (
+      <Typography variant="body1" component={"div"} className={"text-hint"}>
+        <div className={"min-w-0 max-w-[700px] line-clamp-1"}>分类：——</div>
+      </Typography>
+    )
   }
 }
 
-const PublishDateDisplay = ({ date }) => {
-  if (!!date) {
+const TagDisplay = ({ tags }) => {
+  const isDesktop = useSelector(state => state.isDesktop)
+  tags = _.get(tags, "nodes", [])
+  if (tags.length) {
+    return (
+      <Typography variant="body1" component={"div"} className={"text-hint"}>
+        <div className={"min-w-0 max-w-[700px] line-clamp-1"}>
+          标签：
+          {tags.map(item => {
+            return (
+              <span key={item.uri}>
+                <Link className={"text-hint mr-2"} href={item.uri}>
+                  {item.name}
+                </Link>{" "}
+              </span>
+            )
+          })}
+        </div>
+      </Typography>
+    )
+  } else {
+    return (
+      <Typography variant="body1" component={"div"} className={"text-hint"}>
+        <div className={"min-w-0 max-w-[700px] line-clamp-1"}>标签：——</div>
+      </Typography>
+    )
+  }
+}
+
+const ModifiedDateDisplay = ({ modifiedGmt }) => {
+  if (!!modifiedGmt) {
     return (
       <>
         <Typography
           variant="body1"
           component={"span"}
-          className={"text-hint whitespace-nowrap justify-self-end"}
+          className={
+            "text-hint whitespace-nowrap justify-self-end align-bottom min-h-fit"
+          }
         >
-          {date}
+          {modifiedGmt}
         </Typography>
       </>
     )

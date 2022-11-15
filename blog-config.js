@@ -26,3 +26,11 @@ export const tagWidgetOrderUseCount = true
 export const blogPostUriPrefix = "/blog"
 export const categoryUriPrefix = "/blog"
 export const tagUriPrefix = "/blog"
+
+export const defaultDescription = {
+  category: "该分类暂无描述。",
+  tag: "该标签暂无描述。",
+  post: "暂无摘要。",
+}
+
+export const noPostText = "暂无内容"

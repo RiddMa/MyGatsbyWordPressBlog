@@ -66,7 +66,7 @@ const BlogPostBody = ({ previous, next, post, featuredImage }) => {
           </header>
 
           {!!post.content && (
-            <section itemProp="articleBody" className={"prose"}>
+            <section itemProp="articleBody" className={"prose dark:prose-invert max-w-full"}>
               {parse(post.content)}
             </section>
           )}

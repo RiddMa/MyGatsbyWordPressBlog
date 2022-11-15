@@ -11,11 +11,13 @@ import MainLeftPanel from "../components/basic/main-left-panel"
 import BlogPostIndexEntry from "../components/basic/blog-post-index-entry"
 import MainRightPanel from "../components/basic/main-right-panel"
 import BlogPostPagination from "../components/basic/blog-post-pagination"
+import EntryCard from "../components/basic/entry-card"
+import { noPostText } from "../../blog-config"
 
 const BlogPostArchiveV2 = props => {
   console.log(props)
   const posts = _.get(props, "data.allWpPost.nodes")
-  const { currentPage, totalPages, pageUris, pageData } = _.get(
+  const { currentPage, totalPages, pageUris, pageData, cardType } = _.get(
     props,
     "pageContext"
   )
@@ -30,6 +32,7 @@ const BlogPostArchiveV2 = props => {
             totalPages,
             pageUris,
             pageData,
+            cardType,
           }}
         />
       }
@@ -52,7 +55,7 @@ const BlogPostArchiveV2 = props => {
 }
 
 const BlogPostList = ({
-  pageContext: { currentPage, totalPages, pageUris, pageData },
+  pageContext: { currentPage, totalPages, pageUris, pageData, cardType },
   path,
 }) => {
   const duration = 0.25
@@ -69,18 +72,18 @@ const BlogPostList = ({
     exit: { opacity: 0, transition: { duration: duration } },
   }
 
-  if (!pageData.length) {
-    return (
-      <div>
-        <Seo title="All posts" />
-        <Bio />
-        <p>
-          No blog posts found. Add posts to your WordPress site and they'll
-          appear here!
-        </p>
-      </div>
-    )
-  }
+  // if (!pageData.length) {
+  //   return (
+  //     <div>
+  //       <Seo title="All posts" />
+  //       <Bio />
+  //       <p>
+  //         No blog posts found. Add posts to your WordPress site and they'll
+  //         appear here!
+  //       </p>
+  //     </div>
+  //   )
+  // }
   return (
     <div
       className={
@@ -104,15 +107,30 @@ const BlogPostList = ({
         animate="animate"
         exit="exit"
       >
-        {pageData.map(item => {
+        {pageData.map(el => {
           return (
-            <BlogPostIndexEntry
-              key={item["uri"]}
-              data={item}
+            // <BlogPostIndexEntry
+            //   key={el["uri"]}
+            //   data={el}
+            //   className={"flex-auto"}
+            // ></BlogPostIndexEntry>
+            <EntryCard
+              key={el["id"]}
+              data={el}
+              type={cardType}
               className={"flex-auto"}
-            ></BlogPostIndexEntry>
+            ></EntryCard>
           )
         })}
+        {pageData.length === 0 && (
+          <>
+            <div className={"flex flex-row w-full"}>
+              <div className={"grow"}></div>
+              <span className={"w-fit"}>{noPostText}</span>
+              <div className={"grow"}></div>
+            </div>
+          </>
+        )}
       </motion.div>
       <div className={"grid grid-flow-col justify-center"}>
         <BlogPostPagination
