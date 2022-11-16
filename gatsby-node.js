@@ -71,6 +71,45 @@ const createIndividualBlogPostPages = async ({ posts, gatsbyUtilities }) =>
     )
   )
 
+async function createIndividualBlogPages({ posts, gatsbyUtilities }) {
+  const graphqlResult = await gatsbyUtilities.graphql(`
+    query {
+      allWpPage {
+        pages:nodes {
+          id
+          uri
+          title
+          frontendSettings {
+            frontendShow:frontendshow
+          }
+          slug
+          modifiedGmt
+          dateGmt
+          featuredImage {
+            node {
+              id
+            }
+          }
+          content
+        }
+      }  
+    }
+  `)
+  const { pages } = _.get(graphqlResult, "data.allWpPage", [])
+  return Promise.all(
+    pages.map(async page => {
+      await gatsbyUtilities.actions.createPage({
+        path: page.uri,
+        // use the blog post archive template as the page component
+        component: path.resolve(`./src/templates/blog-page.js`),
+        context: {
+          id: page.id,
+        },
+      })
+    })
+  )
+}
+
 /**
  * This function creates blog page archive sorted by date in this site
  */
@@ -438,9 +477,7 @@ async function createBlogPostArchiveByTag({ posts, gatsbyUtilities }) {
         if (page > 0 && page <= totalPages) {
           return page === 1
             ? decodeURIComponent(`/blog/tag/${tagChunksData.tagSlug}/`)
-            : decodeURIComponent(
-                `/blog/tag/${tagChunksData.tagSlug}/${page}`
-              )
+            : decodeURIComponent(`/blog/tag/${tagChunksData.tagSlug}/${page}`)
         }
         return null
       }
